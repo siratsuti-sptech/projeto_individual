@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Dashboard</title>
+  <defs>
+    <filter id="papel" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="12" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.2 0 0 0 -1.25" result="speck"/>
+      <feComposite in="d" in2="speck" operator="out"/>
+    </filter>
+    <g id="flor">
+      <g fill="#c9a0ec">
+        <circle cx="0" cy="-14" r="11"/><circle cx="13" cy="-4" r="11"/>
+        <circle cx="8" cy="12" r="11"/><circle cx="-8" cy="12" r="11"/><circle cx="-13" cy="-4" r="11"/>
+      </g>
+      <circle r="6" fill="#7a3fb0"/>
+    </g>
+  </defs>
+
+  <g filter="url(#papel)">
+    <!-- arco em pincelada -->
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#c08ae8" stroke-width="22" stroke-linecap="round"
+            stroke-dasharray="1040 217" transform="rotate(110 256 256)"/>
+
+    <!-- sol -->
+    <circle cx="175" cy="150" r="36" fill="#b57fe0"/>
+
+    <!-- barras estilo bambu -->
+    <rect x="150" y="292" width="42" height="88" rx="8" fill="#c08ae8"/>
+    <rect x="205" y="242" width="42" height="138" rx="8" fill="#9b5fd0"/>
+    <rect x="260" y="192" width="42" height="188" rx="8" fill="#b57fe0"/>
+    <rect x="315" y="142" width="42" height="238" rx="8" fill="#7a3fb0"/>
+
+    <!-- nós do bambu -->
+    <g stroke="#ecdcfa" stroke-width="4" stroke-linecap="round">
+      <line x1="154" y1="325" x2="188" y2="325"/>
+      <line x1="209" y1="300" x2="243" y2="300"/><line x1="209" y1="348" x2="243" y2="348"/>
+      <line x1="264" y1="260" x2="298" y2="260"/><line x1="264" y1="320" x2="298" y2="320"/>
+      <line x1="319" y1="205" x2="353" y2="205"/><line x1="319" y1="270" x2="353" y2="270"/><line x1="319" y1="335" x2="353" y2="335"/>
+    </g>
+
+    <!-- ondas na base -->
+    <g stroke="#9b5fd0" stroke-width="6" stroke-linecap="round">
+      <line x1="130" y1="398" x2="382" y2="398"/>
+      <line x1="170" y1="414" x2="342" y2="414"/>
+      <line x1="210" y1="430" x2="302" y2="430"/>
+    </g>
+
+    <!-- flor no topo da barra maior -->
+    <use href="#flor" transform="translate(336 116) scale(1.05)"/>
+  </g>
+</svg>

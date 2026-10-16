@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Login</title>
+    <title>旅人 | Tabito | Login</title>
 
     <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
+    <link rel="icon" href="./assets/icon/Emblema Tabito_ Jornada Japonesa.png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
@@ -21,18 +21,19 @@
 
     <div class="header">
         <div class="container">
-            <h1 class="titulo">AquaTech</h1>
+            <a href="index.html" class="marca">
+                <img src="assets/imgs/logo-emblema.png" alt="Logo do Tabito">
+            <h1 class="titulo">旅人 | Tabito</h1>
             <ul class="navbar">
                 <li>
                     <a href="index.html">Inicial</a>
                 </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
+         
                 <li>|</li>
                 <li class="agora">
                     <a href="#">Login</a>
                 </li>
+                <li>|</li>
                 <li>
                     <a href="cadastro.html">Cadastro</a>
                 </li>
@@ -49,7 +50,7 @@
         </div>
         <div class="container">
             <div class="card card-login">
-                <h2>Olá de volta!</h2>
+                <h2>Fez boa viagem?</h2>
                 <div class="formulario">
                     <div class="campo">
                         <span>E-mail:</span>
@@ -74,7 +75,10 @@
     <!--footer inicio-->
     <div class="footer">
         <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
+            <h4>Preparado para voar?</h4>
+            <div class="footer-acoes">
+                <a href="cadastro.html" class="footer-link">Criar minha jornada</a>
+          </div>
         </div>
     </div>
     <!--footer fim-->
@@ -85,74 +89,63 @@
 
 <script>
 
+var MODO_SEM_BANCO = true;
 
-    function entrar() {
-        aguardar();
+function entrar() {
+    aguardar();
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
 
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
-
-                    setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
+    if (emailVar == "" || senhaVar == "") {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha o e-mail e a senha.";
+        setTimeout(sumirMensagem, 5000);
+        finalizarAguardar();
         return false;
     }
 
-    function sumirMensagem() {
-        cardErro.style.display = "none"
+    if (MODO_SEM_BANCO) {
+        sessionStorage.EMAIL_USUARIO = emailVar;
+        sessionStorage.NOME_USUARIO = "Viajante";
+        sessionStorage.ID_USUARIO = 1;
+
+        setTimeout(function () {
+            window.location = "./dashboard/cards.html";
+        }, 1000);
+        return false;
     }
+
+    fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            senhaServer: senhaVar
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                sessionStorage.EMAIL_USUARIO = json.email;
+                sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.ID_USUARIO = json.id;
+
+                setTimeout(function () {
+                    window.location = "./dashboard/cards.html";
+                }, 1000);
+            });
+        } else {
+            resposta.text().then(texto => {
+                console.error(texto);
+                finalizarAguardar(texto);
+            });
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        finalizarAguardar("Não foi possível conectar ao servidor.");
+    });
+
+    return false;
+}
 
 </script>

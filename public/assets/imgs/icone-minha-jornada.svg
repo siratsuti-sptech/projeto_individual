@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Minha Jornada</title>
+  <defs>
+    <filter id="papel" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.2 0 0 0 -1.25" result="speck"/>
+      <feComposite in="d" in2="speck" operator="out"/>
+    </filter>
+    <g id="flor">
+      <g fill="#c9a0ec">
+        <circle cx="0" cy="-14" r="11"/><circle cx="13" cy="-4" r="11"/>
+        <circle cx="8" cy="12" r="11"/><circle cx="-8" cy="12" r="11"/><circle cx="-13" cy="-4" r="11"/>
+      </g>
+      <circle r="6" fill="#7a3fb0"/>
+    </g>
+  </defs>
+
+  <g filter="url(#papel)">
+    <!-- arco em pincelada -->
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#c08ae8" stroke-width="22" stroke-linecap="round"
+            stroke-dasharray="1040 217" transform="rotate(-60 256 256)"/>
+
+    <!-- sol -->
+    <circle cx="330" cy="168" r="42" fill="#b57fe0"/>
+
+    <!-- colinas -->
+    <path d="M110 372 Q200 285 290 340 Q350 300 410 372 Z" fill="#9b5fd0"/>
+    <path d="M150 372 Q240 322 330 372 Z" fill="#7a3fb0"/>
+
+    <!-- estrada sinuosa -->
+    <path d="M205 395 C 330 372, 175 335, 262 305 C 318 286, 262 262, 300 244"
+          fill="none" stroke="#e9d4f8" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- pontinhos de passos -->
+    <circle cx="196" cy="410" r="4" fill="#9b5fd0"/>
+    <circle cx="170" cy="418" r="3" fill="#9b5fd0"/>
+
+    <!-- flores -->
+    <use href="#flor" transform="translate(168 150) scale(1.1)"/>
+    <use href="#flor" transform="translate(385 270) scale(0.7)"/>
+  </g>
+</svg>

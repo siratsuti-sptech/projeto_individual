@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Descobrir</title>
+  <defs>
+    <filter id="papel" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="21" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.2 0 0 0 -1.25" result="speck"/>
+      <feComposite in="d" in2="speck" operator="out"/>
+    </filter>
+    <g id="flor">
+      <g fill="#c9a0ec">
+        <circle cx="0" cy="-14" r="11"/><circle cx="13" cy="-4" r="11"/>
+        <circle cx="8" cy="12" r="11"/><circle cx="-8" cy="12" r="11"/><circle cx="-13" cy="-4" r="11"/>
+      </g>
+      <circle r="6" fill="#7a3fb0"/>
+    </g>
+  </defs>
+
+  <g filter="url(#papel)">
+    <!-- arco em pincelada -->
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#c08ae8" stroke-width="22" stroke-linecap="round"
+            stroke-dasharray="1040 217" transform="rotate(200 256 256)"/>
+
+    <!-- anel da bússola -->
+    <circle cx="256" cy="256" r="104" fill="none" stroke="#b57fe0" stroke-width="8"/>
+    <g stroke="#9b5fd0" stroke-width="6" stroke-linecap="round">
+      <line x1="256" y1="140" x2="256" y2="156"/><line x1="256" y1="356" x2="256" y2="372"/>
+      <line x1="140" y1="256" x2="156" y2="256"/><line x1="356" y1="256" x2="372" y2="256"/>
+    </g>
+
+    <!-- agulha / estrela de 4 pontas -->
+    <g transform="rotate(35 256 256)">
+      <path d="M256 128 L276 236 L384 256 L276 276 L256 384 L236 276 L128 256 L236 236 Z" fill="#c9a0ec"/>
+      <path d="M256 128 L276 236 L236 236 Z" fill="#7a3fb0"/>
+      <path d="M256 384 L276 276 L236 276 Z" fill="#9b5fd0"/>
+    </g>
+    <circle cx="256" cy="256" r="12" fill="#7a3fb0"/>
+    <circle cx="256" cy="256" r="5" fill="#ecdcfa"/>
+
+    <!-- flores e pétalas -->
+    <use href="#flor" transform="translate(150 150) scale(1.0)"/>
+    <use href="#flor" transform="translate(388 372) scale(0.7)"/>
+    <ellipse cx="410" cy="200" rx="7" ry="4" fill="#c08ae8" transform="rotate(-20 410 200)"/>
+    <ellipse cx="120" cy="330" rx="6" ry="3.5" fill="#c08ae8" transform="rotate(15 120 330)"/>
+  </g>
+</svg>
