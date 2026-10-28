@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/images/tabito.png" alt="Tabito - Experiência com propósito!" width="100%">
+
 # 旅人 | Tabito
 
 ### Experiências com propósito
