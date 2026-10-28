@@ -2,7 +2,6 @@
 
 <img src="docs/tabito_banner.png" alt="Tabito - Experiência com propósito!" width="100%">
 
-### Experiências com propósito
 
 Um espaço para compartilhar experiências de viagem, com foco no Japão.
 
