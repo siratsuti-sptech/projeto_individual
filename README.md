@@ -64,29 +64,29 @@ Alguns dos lugares que já visitei e que inspiraram o Tabito.
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/img/japao.JPG" alt="Lugar 1" width="100%"><br>
+      <img src="docs/japao.JPG" alt="Lugar 1" width="100%"><br>
       <sub><b>Lugar 1</b><br>Japão</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/inglaterra.JPG" alt="Lugar 2" width="100%"><br>
+      <img src="docs/inglaterra.JPG" alt="Lugar 2" width="100%"><br>
       <sub><b>Lugar 2</b><br>Inglaterra</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/portugal.JPG" alt="Lugar 3" width="100%"><br>
+      <img src="docs/portugal.JPG" alt="Lugar 3" width="100%"><br>
       <sub><b>Lugar 3</b><br>Portugal</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/img/italia.JPG" alt="Lugar 4" width="100%"><br>
+      <img src="docs/italia.JPG" alt="Lugar 4" width="100%"><br>
       <sub><b>Lugar 4</b><br>Itália</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/vaticano.JPG" alt="Lugar 5" width="100%"><br>
+      <img src="docs/vaticano.JPG" alt="Lugar 5" width="100%"><br>
       <sub><b>Lugar 5</b><br>Vaticano</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/franca.JPG" alt="Lugar 6" width="100%"><br>
+      <img src="docs/franca.JPG" alt="Lugar 6" width="100%"><br>
       <sub><b>Lugar 6</b><br>França</sub>
     </td>
   </tr>
