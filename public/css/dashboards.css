@@ -1,419 +1,334 @@
-/* pagina mural */
+/* Página "Minha Jornada" (cards.html), no mesmo visual de index e login */
 
 @import url('https://fonts.googleapis.com/css2?family=Yuji+Boku&family=Klee+One:wght@400;600&display=swap');
 
+:root {
+  --fundo: #160a28;
+  --roxo: #5a22b0;
+  --roxo-escuro: #2a1352;
+  --lilas: #b794f4;
+  --lilas-claro: #d9c4fa;
+  --linha: #6d4de0;
+  --texto: #f1e9ff;
+  --suave: #bfaee0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Yuji Boku', 'Klee One', cursive;
-  background-image: url('../assets/imgs/Tabito_Fundo_Trello_Centro.png');
+  min-height: 100vh;
+  font-family: 'Klee One', 'Yuji Boku', cursive;
+  background: var(--fundo);
+  color: var(--texto);
 }
 
-.label-captura {
+/* Padrão de ondas (seigaiha) ao fundo. Ajuste opacity/size se quiser mais ou menos marcado */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url('../assets/imgs/padrao-ondas-roxo-claro.svg');
+  background-size: 140px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 12px max(24px, calc((100% - 1100px) / 2));
+  background: rgba(22, 10, 40, 0.92);
+  border-bottom: 2px solid var(--linha);
+  backdrop-filter: blur(6px);
 }
 
-.dash-right .avisos {
-  width: 100%;
-  color: rgb(216, 216, 216);
-  font-family: 'Yuji Boku', 'Klee One', cursive;
-}
-
-.dash-right .avisos .container {
+.marca {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--lilas-claro);
+  font-family: 'Yuji Boku', cursive;
+  font-size: 2.1rem;
+}
+
+.marca img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+}
+
+.marca .sep {
+  width: 2px;
+  height: 38px;
+  background: var(--lilas);
+}
+
+.topo-nav {
+  display: flex;
   align-items: center;
 }
 
-.dash-right .avisos .container .div-form {
-  width: 95%;
+.topo-nav a {
+  padding: 0 18px;
+  color: var(--lilas);
+  font-style: italic;
+  font-size: 1.15rem;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.dash-right .avisos .container .div-form #form_postagem {
-  width: 95%;
+.topo-nav a + a {
+  border-left: 2px solid var(--linha);
 }
 
-.dash-right .avisos .div-form label {
-  width: 95%;
+.topo-nav a:hover {
+  color: #ffffff;
 }
 
-.dash-right .avisos .div-form input {
-  width: 95%;
-  border-radius: 5px;
-}
-
-.dash-right .avisos .div-form textarea {
-  width: 95%;
-  border: 3px solid #e6005a;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.dash-right .avisos .div-form button {
-  cursor: pointer;
-  font-family: 'Yuji Boku', 'Klee One', cursive;
-  border: 0;
-  border-radius: 5px;
+.topo-nav a.atual {
+  color: #ffffff;
   font-weight: 600;
-  font-size: 18px;
-  padding: 10px 15px;
-  color: white;
-  background-color: #e6005a;
-  width: 120px;
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
-.publicacao-btn-editar {
-  cursor: pointer;
-  font-family: 'Yuji Boku', 'Klee One', cursive;
-  border: 0;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 5px 8px;
-  color: white;
-  background-color: #e6005a;
-  width: 80px;
+/* ---------- Conteúdo ---------- */
+
+.jornada {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 20px 80px;
+  line-height: 1.6;
 }
 
-.publicacao {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: stretch;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  border-bottom: 3px solid #e6005a;
-  padding: 20px;
+/* Painel com moldura dupla, como o mapa da tela de login */
+.painel {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 36px;
+  background: rgba(42, 19, 82, 0.72);
+  border: 1px solid rgba(183, 148, 244, 0.45);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
 }
 
-.publicacao>*:not(:last-child) {
-  padding: 0 0 10px 0;
-}
-
-.div-results {
-  width: 100%;
-}
-
-.div-results .feed-container {
-  background-color: #212124;
-  border-radius: 5px;
-  margin-bottom: 80px;
-}
-
-.div-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.div-buttons>* {
-  margin-left: 30px;
-}
-
-/* pagina graficos */
-
-.dash-header {
-  background-color: #212124;
-}
-
-
-
-.area-parametros-alerta {
-  /* border: 2px solid pink; */
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  margin: auto;
-  margin-top: 10px;
-  background-color: #212124;
-}
-
-.area-parametros-alerta .titulo-legenda {
-  color: white;
-  font-weight: 600;
-  width: fit-content;
-  margin: 10px 20px;
-}
-
-.parametros-alerta {
-  display: flex;
-  width: 100%;
-}
-
-.item-regua {
-  width: 20%;
-  text-align: center;
-  height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: center;
-}
-
-.item-regua p {
-  margin: 0;
-  font-weight: 500;
-}
-
-.item-regua p:nth-child(2) {
-  font-weight: 800;
-}
-
-.perigo-frio {
-  background-color: #5c6bc0;
-}
-
-.perigo-quente {
-  background-color: #ff7043;
-}
-
-.alerta-frio {
-  background-color: #42a5f5;
-}
-
-.alerta-quente {
-  background-color: #ffee58;
-}
-
-.ideal {
-  background-color: #9ccc65;
-}
-
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: 450px;
-  width: 100%;
-  align-items: center;
-  color: white;
-}
-
-.card-aquario {
-  margin: 2%;
-  min-width: 40%;
-  max-width: 50%;
-  width: fit-content;
-  flex-wrap: wrap;
-  display: flex;
-  /* text-align: center; */
-  height: 180px;
-  /* justify-content: right; */
-  background-color: #212124;
-  font-size: 20px;
-}
-
-.card-aquario h1 {
-  width: fit-content;
-}
-
-.card-aquario p {
-  margin: 0;
-  font-size: 50px;
-  font-weight: lighter;
-  text-align: left;
-}
-
-.desc-aquario {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-}
-
-.desc-aquario .cor-alerta {
-  width: 30px;
-}
-
-.title-aquario {
-  width: 100%;
-}
-
-
-.cards h1 {
-  font-size: 22px;
-  border-bottom: solid white 1px;
-  text-align: left;
-  font-weight: lighter;
-  margin: 20px;
-}
-
-.temperatura {
-  margin: 5px;
-  margin-left: 20px;
-  width: 75%;
-}
-
-.cor-alerta {
-  width: 13%;
-  height: 30%;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.btns-dash {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-  flex-wrap: wrap;
-  padding: 0 30% 0 30%;
-}
-
-.graph {
-  width: 70%;
-  margin: auto;
-  padding-top: 10px;
-}
-
-.tituloGraficos {
-  color: rgb(216, 216, 216);
-  display: flex;
-  justify-content: center;
-}
-
-.btn-chart {
-  font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border: 0;
-  font-weight: 600;
-  font-size: 18px;
-  padding: 10px 15px;
-  color: #e6005a;
-  background-color: white;
-  margin: 5px;
+.painel::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(183, 148, 244, 0.18);
   border-radius: 3px;
-  cursor: pointer
+  pointer-events: none;
 }
 
-.btn-pink {
-  color: white;
-  background-color: #e6005a;
+.kicker {
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px;
+  color: var(--lilas);
+  font-style: italic;
+  font-size: 1.1rem;
 }
 
-.btn-white {
-  color: #e6005a;
-  background-color: white;
-
+.selo {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+  border: 1px solid var(--lilas);
+  border-radius: 4px;
+  font-style: normal;
+  font-family: 'Yuji Boku', cursive;
 }
 
-.label-captura {
-  height: 80px;
+.intro h2 {
+  margin: 0 0 16px;
+  font-family: 'Yuji Boku', cursive;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #ffffff;
 }
 
-.display-none {
+.intro h2 span {
+  color: var(--lilas);
+}
+
+.intro p:last-child {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--suave);
+  font-size: 1.1rem;
+}
+
+.titulo-secao {
+  margin: 0 0 24px;
+  font-family: 'Yuji Boku', cursive;
+  font-weight: 400;
+  color: var(--lilas-claro);
+}
+
+/* ---------- Linha do tempo ---------- */
+
+.linha-tempo {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 28px;
+  border-left: 2px solid var(--linha);
+}
+
+.marco {
+  position: relative;
+  padding: 0 0 24px 20px;
+}
+
+.marco:last-child {
+  padding-bottom: 0;
+}
+
+.marco::before {
+  content: '';
+  position: absolute;
+  left: -36px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lilas);
+  box-shadow: 0 0 0 4px rgba(183, 148, 244, 0.25);
+}
+
+.marco h3 {
+  margin: 0 0 4px;
+  color: #ffffff;
+}
+
+.marco p {
+  margin: 0;
+  color: var(--suave);
+}
+
+/* ---------- Galeria ---------- */
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.card-lugar {
+  position: relative;
+  overflow: hidden;
+  background: var(--roxo-escuro);
+  border: 1px solid rgba(183, 148, 244, 0.35);
+  border-radius: 8px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.card-lugar:hover {
+  transform: translateY(-4px);
+  border-color: var(--lilas);
+  box-shadow: 0 10px 24px rgba(90, 34, 176, 0.45);
+}
+
+/* Número no estilo da legenda do mapa */
+.numero {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--fundo);
+  border: 2px solid var(--lilas-claro);
+  border-radius: 50%;
+  color: var(--lilas-claro);
+  font-weight: 600;
+}
+
+.foto-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, var(--roxo), var(--fundo));
+}
+
+.foto-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foto-wrap.sem-foto img {
   display: none;
 }
 
-.display-flex {
+.foto-wrap.sem-foto::after {
+  content: '旅';
+  position: absolute;
+  inset: 0;
   display: flex;
-}
-
-.display-block {
-  display: block;
-}
-
-canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* PAGINA DOS GRÁFICOS 2023-2026 */
-
-.janela {
-  display: column;
-  /* width: 100vw; */
-}
-
-.header-left a {
-  text-decoration: none;
-  color: white;
-}
-
-.header-left {
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  height: var(--tamanho-header);
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  border-right: none;
-  background-color:  #48177a;
-}
-
-.dash-right {
-  display: flex;
-  width: 70%;
-  height: fit-content;
-  background-color: #161618;
-  position: relative;
-  top: 0;
-  left: 25%;
-  height: 100vh;
-  overflow: auto;
-}
-
-.header-left h1 {
-  color: #32b9cd;
-}
-
-.hello {
-  width: 100%;
-  display: flex;
   justify-content: center;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.25);
 }
 
-.hello h3 {
-  color: #e3b062;
-  font-weight: 300;
-  font-size: 1.2rem;
+.card-lugar-texto {
+  padding: 16px 18px 20px;
 }
 
-.hello h3 span {
-  font-weight: 800;
-}
-
-.btn-nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-  background-color: transparent; /* o preto atrás dos botões sumiria o fundo da navbar */
-}
-
-.btn-nav-white {
-  width: auto;                 /* o tamanho vem do conteúdo */
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 3px solid #e6005a;
-  border-radius: 5px;
-  text-align: center;
-  white-space: nowrap;         /* impede o texto de quebrar ou vazar */
-  cursor: pointer;
-}
-
-.btn-nav-white h3 {
+.card-lugar-texto h3 {
   margin: 0;
-  padding: 0;
-  color: #e6005a;              /* o texto na captura está rosa, não preto */
-}
-
-.btn-logout {
-  width: auto;
-  margin: 0;                   /* tira o margin-bottom: 100px */
-  padding: 10px 20px;
-  background-color: #32b9cd;   /* turquesa, como aparece na captura */
-  border-radius: 5px;
-  text-align: center;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.btn-logout h3 {
-  margin: 0;
-  padding: 0;
   color: #ffffff;
+}
+
+.card-lugar-texto .jp {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--lilas);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.card-lugar-texto p {
+  margin: 0;
+  color: var(--suave);
+  font-size: 0.95rem;
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 760px) {
+  .topo {
+    justify-content: center;
+  }
+
+  .marca {
+    font-size: 1.7rem;
+  }
+
+  .topo-nav a {
+    padding: 0 10px;
+    font-size: 1rem;
+  }
+
+  .painel {
+    padding: 24px 20px;
+  }
 }

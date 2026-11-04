@@ -6,115 +6,106 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅人 | Tabito | Home</title>
+    <title>旅人 | Tabito | Minha Jornada</title>
 
-
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-
+    <link rel="stylesheet" href="./../css/dashboards.css" />
     <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
+<body onload="validarSessao(); exibirGaleria()">
 
-    <div class="janela">
+    <header class="topo">
+        <a class="marca" href="../index.html">
+            <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito">
+            <span class="kanji">旅人</span>
+            <span class="sep"></span>
+            <span class="nome">Tabito</span>
+        </a>
 
-        <div class="header-left dash-header">
+        <nav class="topo-nav">
+            <a class="atual" href="./cards.html">Minha Jornada</a>
+            <a href="./dashboard.html">Dashboard</a>
+            <a href="./mural.html">Compartilhar</a>
+            <a href="#" onclick="limparSessao(); return false;">Sair</a>
+        </nav>
+    </header>
 
-            <h1>旅人</h1>
+    <main class="jornada">
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+        <section class="painel intro">
+            <p class="kicker"><span class="selo">旅</span>Olá, <span id="b_usuario">viajante</span>!</p>
+            <h2>Uma vida entre <span>dois países</span></h2>
+            <p>
+                Nasci no Japão, cresci no Brasil e voltei a morar no Japão aos 13 anos.
+                Dessa ida e volta ficou a certeza de que todo mundo tem algo para compartilhar
+                com o próximo. Estes são alguns dos lugares que marcaram o caminho.
+            </p>
+        </section>
 
-            <div class="btn-nav">
-                <h3>Minha Jornada</h3>
-            </div>
+        <section class="painel">
+            <h2 class="titulo-secao">Minha história</h2>
+            <!-- Edite os textos abaixo e acrescente detalhes seus -->
+            <ol class="linha-tempo">
+                <li class="marco">
+                    <h3>Nascimento no Japão</h3>
+                    <p>Onde tudo começou.</p>
+                </li>
+                <li class="marco">
+                    <h3>Crescendo no Brasil</h3>
+                    <p>A infância e a vida em São Paulo, longe do país onde nasci.</p>
+                </li>
+                <li class="marco">
+                    <h3>De volta ao Japão, aos 13 anos</h3>
+                    <p>Um recomeço em um país que era ao mesmo tempo familiar e novo.</p>
+                </li>
+                <li class="marco">
+                    <h3>Nasce o Tabito</h3>
+                    <p>A vontade de ouvir e contar histórias de viajantes virou projeto.</p>
+                </li>
+            </ol>
+        </section>
 
-            <div class="btn-nav-white">
-                <a href="./dashboard.html">
-                    <h3>Dashboard</h3>
-                </a>
-            </div>
+        <section class="painel">
+            <h2 class="titulo-secao">Lugares por onde passei</h2>
+            <div class="galeria" id="galeria"></div>
+        </section>
 
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Compartilhar</h3>
-                </a>
-            </div>
+    </main>
 
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
+    <script>
+        // Para adicionar um lugar, copie a foto para ../assets/imgs/galeria/ e inclua uma linha aqui.
+        const LUGARES = [
+            { pais: "Japão", jp: "日本", foto: "japao.JPG", resumo: "Onde nasci e para onde voltei aos 13 anos." },
+            { pais: "França", jp: "フランス", foto: "franca.JPG", resumo: "Um capítulo da minha jornada pela Europa." },
+            { pais: "Itália", jp: "イタリア", foto: "italia.JPG", resumo: "Um capítulo da minha jornada pela Europa." },
+            { pais: "Vaticano", jp: "バチカン", foto: "vaticano.JPG", resumo: "Um capítulo da minha jornada pela Europa." },
+            { pais: "Portugal", jp: "ポルトガル", foto: "portugal.JPG", resumo: "Um capítulo da minha jornada pela Europa." },
+            { pais: "Inglaterra", jp: "イギリス", foto: "inglaterra.JPG", resumo: "Um capítulo da minha jornada pela Europa." }
+        ];
 
-        </div>
+        function exibirGaleria() {
+            const galeria = document.getElementById("galeria");
+            galeria.innerHTML = "";
+            
 
-        <div class="dash">
-            <div id="alerta">
-            </div>
-            <div class="area-parametros-alerta">
-                <p class="titulo-legenda">
-                    Legenda - Parâmetros para Alertas
-                </p>
-                <div class="parametros-alerta">
-                    <div class="item-regua perigo-frio">
-                        <p>Perigo</p>
-                        <p>&lt;=5°C</p>
-                    </div>
-                    <div class="item-regua alerta-frio">
-                        <p>Alerta</p>
-                        <p>&lt;=10°C</p>
-                    </div>
-                    <div class="item-regua ideal">
-                        <p>Ideal</p>
-                        <p>20°C</p>
-                    </div>
-                    <div class="item-regua alerta-quente">
-                        <p>Alerta</p>
-                        <p>&gt;=22°C</p>
-                    </div>
-                    <div class="item-regua perigo-quente">
-                        <p>Perigo</p>
-                        <p>&gt;=23°C</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cards" id="cardAquarios">
-
-            </div>
-
-        </div>
-
-    </div>
+            LUGARES.forEach((lugar, i) => {
+                galeria.innerHTML += `
+                    <article class="card-lugar">
+                        <span class="numero">${i + 1}</span>
+                        <div class="foto-wrap">
+                            <img src="../assets/imgs/${lugar.foto}" alt="${lugar.pais}" loading="lazy"
+                                onerror="this.parentElement.classList.add('sem-foto')">
+                        </div>
+                        <div class="card-lugar-texto">
+                            <h3>${lugar.pais}</h3>
+                            <span class="jp">${lugar.jp}</span>
+                            <p>${lugar.resumo}</p>
+                        </div>
+                    </article>`;
+            });
+        }
+    </script>
 
 </body>
-
-<script>
-
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
-    }
-
-</script>
 
 </html>
