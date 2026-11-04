@@ -1,105 +1,219 @@
-<img src="https://user-images.githubusercontent.com/46379117/192358781-9ca879e4-e55e-4d0d-b876-f9a4a2ed9ae8.png" width="600px">
+<div align="center">
 
-_Web Data Visualization = Visualização de Dados na Web_
+<img src="docs/tabito_banner.png" alt="Tabito - Experiência com propósito!" width="100%">
 
-_Implementação de Referência para o seu Projeto de Primeiro Semestre_
+<br>
 
-<hr>
+# 旅人 Tabito
 
-# Como usar
+**Um espaço para compartilhar experiências de viagem, com foco no Japão.**
 
-1. Clone este repositório em sua máquina.
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-7c4dbd?style=for-the-badge)
+![SPTech](https://img.shields.io/badge/SPTech-ADS-1f1233?style=for-the-badge)
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
 
-1. Crie, no Banco de Dados, as tabelas necessárias para o funcionamento deste projeto.
-- Siga as instruções no arquivo **/src/database/script-tabelas.sql**
+[Sobre](#-sobre-o-projeto) •
+[Galeria](#-galeria) •
+[Funcionalidades](#-funcionalidades) •
+[Tecnologias](#-tecnologias) •
+[Como executar](#-como-executar) •
+[Autor](#-autor)
 
+</div>
 
-3. Acesse o arquivo **app.js** e parametrize o ambiente.
-- Se você estiver utilizando o Ambiente de Produção (remoto), comente a linha 2 e deixe habilitada a linha 1 onde está o valor **var ambiente_processo = 'producao';**
-- Se você estiver utilizando o Ambiente de Desenvolvimento (local), comente a linha 1 e deixe habilitada a linha 2 onde está o valor **var ambiente_processo = 'desenvolvimento';**
+---
 
-4. Adicione as credenciais de Banco de Dados no arquivo **.env** ou em **.env.dev**, seguindo as instruções neste.
+## Sobre o projeto
 
-5. Acesse este repositório no seu terminal (GitBash ou VSCode) e execute os comandos abaixo:
+**Tabito** (旅人) significa *viajante* em japonês.
 
-```
-npm i
-``` 
-_O comando acima irá instalar as bibliotecas necessárias para o funcionamento do projeto. As bibliotecas a serem instaladas estão listadas no arquivo **package.json** então é muito importante que este não seja alterado. Será criada uma nova pasta/diretório chamado **node_modules** quando o comando for finalizado, que é onde as bibliotecas estão localizadas. Não altere a pasta/diretório._
+O projeto nasceu da minha vivência: nasci no Japão, cresci no Brasil e voltei a morar no Japão aos 13 anos. Dessa jornada surgiu a convicção de que **todo mundo tem algo para compartilhar com o próximo**.
 
-```
-npm start
-``` 
+### O problema
 
-_O comando acima irá iniciar seu projeto e efetuar os comandos de acordo com a sua parametrização feita nos passos anteriores._
+Informações sobre viagens e vida no Japão costumam estar espalhadas, ou vêm de guias genéricos que não carregam a experiência de quem realmente esteve lá.
 
-6. Para "ver" seu projeto funcionando, acesse em seu navegador o caminho **informado no terminal**.
+### A solução
 
-7. Caso queira parar a execução, tecle **CTRL+C** no terminal em que o projeto está rodando.
+Um website com cadastro e login em que qualquer pessoa pode **publicar suas próprias vivências, dicas e histórias de viagem**, e também explorar o que outros viajantes compartilharam.
 
-## Adicionar novo recurso ao projeto
+> Projeto individual de **Pesquisa e Inovação** do curso de Análise e Desenvolvimento de Sistemas da **SPTech**, desenvolvido em 6 semanas.
 
-**"Recurso? O que é?"** Enquanto no Banco de Dados chamamos as tabelas de "entidades", quando tratamos de desenvolvimento WEB usamos a palavra "recurso" para se referir a algo que podemos criar, ler, atualizar ou deletar [1]. Estas ações são conhecidas como CRUD: Create, Read, Update e Delete. Para acessar cada ação, usamos os métodos HTTP: POST, GET, PUT e DELETE [2]. (Há outros verbos, porém com estes já conseguimos efetuar CRUDs). 
+---
 
-**Tabela para ajudar a fazer a associação**
+## Identidade visual
+
+- Tons de **roxo e lilás** sobre fundo escuro
+- Padrão *seigaiha* (ondas japonesas) no plano de fundo
+- Logo com flores de cerejeira, Monte Fuji, torii e avião
+- Mapa-múndi em linhas, representando o alcance das experiências
+
+---
+
+## Galeria
+
+Alguns dos lugares que já visitei e que inspiraram o Tabito.
+
 
 <table>
   <tr>
-    <th>C.R.U.D</th>
-    <th>Ação</th>
-    <th>Tradução</th>
-    <th>Verbo HTTP *</th>
-    <th>Comando BD</th>
+    <td align="center" width="33%">
+      <img src="docs/japao.JPG" alt="Lugar 1" width="100%"><br>
+      <sub><b>Lugar 1</b><br>Japão</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/inglaterra.JPG" alt="Lugar 2" width="100%"><br>
+      <sub><b>Lugar 2</b><br>Inglaterra</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/portugal.JPG" alt="Lugar 3" width="100%"><br>
+      <sub><b>Lugar 3</b><br>Portugal</sub>
+    </td>
   </tr>
   <tr>
-    <td>C</td>
-    <td>Create</td>
-    <td>Criar</td>
-    <td>POST</td>
-    <td>INSERT</td>
-  </tr>
-  <tr>
-    <td>R</td>
-    <td>Read</td>
-    <td>Ler</td>
-    <td>GET</td>
-    <td>SELECT</td>
-  </tr>
-  <tr>
-    <td>U</td>
-    <td>Update</td>
-    <td>Atualizar</td>
-    <td>PUT</td>
-    <td>UPDATE</td>
-  </tr>
-  <tr>
-    <td>D</td>
-    <td>Delete</td>
-    <td>Deletar</td>
-    <td>DELETE</td>
-    <td>DELETE</td>
+    <td align="center" width="33%">
+      <img src="docs/italia.JPG" alt="Lugar 4" width="100%"><br>
+      <sub><b>Lugar 4</b><br>Itália</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/vaticano.JPG" alt="Lugar 5" width="100%"><br>
+      <sub><b>Lugar 5</b><br>Vaticano</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="docs/franca.JPG" alt="Lugar 6" width="100%"><br>
+      <sub><b>Lugar 6</b><br>França</sub>
+    </td>
   </tr>
 </table>
 
-_* Você verá o verbo HTTP sendo apontado nos arquivos em /routes_
+---
 
-**"E no meu projeto, o que seria um recurso?"** Em web-data-viz manipulamos os recursos **usuário**, **aviso** e **medida**. Podemos conferir isso vendo para quais entidades foram criados os caminhos de inserção e captura de dados, que envolve os diretórios **routes**, **controllers** e **models**.
+## Funcionalidades
 
-Abaixo, uma figura que ajuda a compreender o caminho percorrido para, por exemplo, efetuar o cadastro de um usuário:
+**Essenciais**
+
+- [ ] Website responsivo
+- [ ] Cadastro e login de usuários
+- [ ] Dashboard do usuário com suas publicações
+- [ ] Criação, edição e exclusão de experiências
+- [ ] Página pública com listagem e filtro por país/categoria
+
+**Ideias futuras**
+
+- [ ] Upload de fotos nas publicações
+- [ ] Curtidas e comentários
+- [ ] Mapa interativo com as experiências por localização
+
+---
+
+## Tecnologias
+
+| Camada | Tecnologia |
+| --- | --- |
+| Front-end | HTML, CSS e JavaScript |
+| Back-end | Node.js |
+| Banco de dados | MySQL |
+| Versionamento | Git e GitHub |
+
+---
+
+## Como executar
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/) (versão LTS)
+- [MySQL](https://www.mysql.com/) instalado e em execução
+- [Git](https://git-scm.com/)
+
+### Passo a passo
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/siratsuti-sptech/projeto_individual.git
+
+# 2. Entre na pasta do projeto
+cd projeto_individual/tabi/web-data-viz
+
+# 3. Instale as dependências
+npm install
+```
+
+**4. Configure o banco de dados**
+
+Execute o script SQL do projeto no MySQL para criar o banco e as tabelas:
+
+```bash
+mysql -u seu_usuario -p < caminho/para/script.sql
+```
+
+**5. Configure as variáveis de ambiente**
+
+Crie um arquivo `.env` (ou `.env.dev`) na raiz do projeto:
+
+```env
+AMBIENTE_PROCESSO=desenvolvimento
+APP_PORT=3333
+APP_HOST=localhost
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=tabito
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+```
+
+**6. Inicie a aplicação**
+
+```bash
+npm start
+```
+
+Depois, acesse **http://localhost:3333** (ou a porta configurada no `.env`).
+
+---
+
+## 📁 Estrutura do projeto
 
 
-![image](https://github.com/user-attachments/assets/d576f178-0da6-437e-b5c9-658e3ebaf6ca)
+```text
+web-data-viz/
+├── public/          # Front-end (HTML, CSS, JS e imagens)
+├── src/
+│   ├── routes/      # Rotas da API
+│   ├── controllers/ # Regras de entrada e saída
+│   ├── models/      # Acesso ao banco de dados
+│   └── database/    # Configuração da conexão
+├── app.js           # Ponto de entrada do servidor
+└── package.json
+```
 
+---
 
+## 📚 Documentação
 
-**Entendi o que é um recurso e gostaria de adicionar um novo ao meu projeto! Como faz?**  
-- Primeiro, crie a tabela no Banco de Dados referente a este recurso. Exemplos de recursos comuns de serem adicionados ao projeto no primeiro semestre: Silo, Aquário, Sala, Andar, Endereço, Mercado, Prateleira, Unidade, Carro, Caminhão...  
-- Assim que criada a tabela, faça todo o caminho de **front-end → routes → controllers → models** replicando o que já existe!  
-- Exemplo, se você quiser a funcionalidade de adicionar um novo Aquário, deve criar arquivos referentes ao aquario nos diretórios e replicar também as funções.  
-- Dica: A implementação de AVISO já contém o CRUD completo! :wink:
- 
-### Fontes bibliográficas
+O escopo completo, com premissas e restrições, está na pasta [`docs/`](./docs).
 
-[1] https://datatracker.ietf.org/doc/html/rfc2396  
-[2] https://datatracker.ietf.org/doc/html/rfc7231
+---
+
+## 👤 Autor
+
+**Kauã Hideaki Siratsuti**
+1º semestre de Análise e Desenvolvimento de Sistemas, SPTech, São Paulo, 2026.
+
+[![GitHub](https://img.shields.io/badge/GitHub-siratsuti--sptech-181717?style=flat-square&logo=github)](https://github.com/siratsuti-sptech)
+
+---
+
+<div align="center">
+
+*Compartilhar experiências com propósito.*
+
+旅人 • Tabito
+
+</div>
