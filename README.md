@@ -64,30 +64,30 @@ Alguns dos lugares que já visitei e que inspiraram o Tabito.
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar1.jpg" alt="Lugar 1" width="100%"><br>
-      <sub><b>Lugar 1</b><br>Região, Japão</sub>
+      <img src="docs/img/japao.jpg" alt="Lugar 1" width="100%"><br>
+      <sub><b>Lugar 1</b><br>Japão</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar2.jpg" alt="Lugar 2" width="100%"><br>
-      <sub><b>Lugar 2</b><br>Região, Japão</sub>
+      <img src="docs/img/inglaterra.jpg" alt="Lugar 2" width="100%"><br>
+      <sub><b>Lugar 2</b><br>Inglaterra</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar3.jpg" alt="Lugar 3" width="100%"><br>
-      <sub><b>Lugar 3</b><br>Região, Japão</sub>
+      <img src="docs/img/portugal.jpg" alt="Lugar 3" width="100%"><br>
+      <sub><b>Lugar 3</b><br>Portugal</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar4.jpg" alt="Lugar 4" width="100%"><br>
-      <sub><b>Lugar 4</b><br>Região, Japão</sub>
+      <img src="docs/img/italia.jpg" alt="Lugar 4" width="100%"><br>
+      <sub><b>Lugar 4</b><br>Itália</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar5.jpg" alt="Lugar 5" width="100%"><br>
-      <sub><b>Lugar 5</b><br>Região, Japão</sub>
+      <img src="docs/img/vaticano.jpg" alt="Lugar 5" width="100%"><br>
+      <sub><b>Lugar 5</b><br>Vaticano</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/galeria/lugar6.jpg" alt="Lugar 6" width="100%"><br>
-      <sub><b>Lugar 6</b><br>Região, Japão</sub>
+      <img src="docs/img/franca.jpg" alt="Lugar 6" width="100%"><br>
+      <sub><b>Lugar 6</b><br>França</sub>
     </td>
   </tr>
 </table>
