@@ -6,12 +6,13 @@ function validarSessao() {
     var b_usuario = document.getElementById("b_usuario");
 
     if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+        if (b_usuario != null) {
+            b_usuario.innerHTML = nome;
+        }
     } else {
         window.location = "../login.html";
     }
 }
-
 function limparSessao() {
     sessionStorage.clear();
     window.location = "../login.html";

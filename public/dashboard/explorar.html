@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅人 | Tabito | Explorar</title>
+
+    <!-- CSS que você já usa (menu, janela...) -->
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <!-- CSS do mapa direto na página. Fica DEPOIS dos links para, em caso de
+         empate com o dashboards.css, valer o que está aqui. -->
+    <style>
+        :root {
+            --fundo: #160a28;
+            --roxo-escuro: #2a1352;
+            --lilas: #b794f4;
+            --lilas-claro: #d9c4fa;
+            --linha: #6d4de0;
+            --texto: #f1e9ff;
+            --suave: #bfaee0;
+            --desejo: #d46ac6;
+        }
+
+        /* Layout em duas colunas: mapa (1fr = o que sobrar) e painel fixo de 300px */
+        .explorar {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 16px;
+            padding: 16px;
+            color: var(--texto);
+        }
+
+        /* Caixa do mapa: relative para a legenda poder ficar dentro com absolute */
+        .mapa-box {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            border: 1px solid var(--lilas);
+            overflow: hidden;
+            background-color: var(--fundo);
+            background-image: url('../assets/imgs/padrao-ondas-roxo-claro.svg');
+            background-size: 140px;
+        }
+
+        #mapa {
+            position: absolute;
+            inset: 0;
+        }
+
+        /* Cada país é um <path> com essa classe (criada pelo datamaps) */
+        .datamaps-subunit {
+            cursor: pointer;
+            transition: fill 0.2s;
+        }
+
+        .hoverinfo {
+            background: var(--roxo-escuro);
+            color: var(--texto);
+            border: 1px solid var(--lilas);
+            padding: 4px 8px;
+            font-size: 13px;
+        }
+
+        .legenda {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            display: grid;
+            gap: 4px;
+            padding: 8px 10px;
+            font-size: 12px;
+            background: rgba(22, 10, 40, 0.9);
+            border: 1px solid var(--lilas);
+        }
+
+        .bolinha {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            margin-right: 6px;
+            border-radius: 50%;
+        }
+
+        .bolinha.visitado { background: var(--lilas-claro); }
+        .bolinha.desejo { background: var(--desejo); }
+        .bolinha.vazio { background: var(--roxo-escuro); border: 1px solid var(--lilas); }
+
+        /* Painel lateral */
+        .painel-lateral {
+            display: grid;
+            gap: 12px;
+            align-content: start;
+        }
+
+        .caixa {
+            padding: 14px;
+            background: var(--roxo-escuro);
+            border: 1px solid var(--linha);
+        }
+
+        .caixa h4 {
+            margin: 0 0 8px;
+            font-weight: 400;
+            color: var(--suave);
+            letter-spacing: 0.1em;
+        }
+
+        .dica { margin: 0; color: var(--suave); font-size: 14px; }
+
+        .numeros {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+        }
+
+        .numeros b { display: block; font-size: 24px; color: var(--lilas-claro); }
+        .numeros span { font-size: 11px; color: var(--suave); }
+
+        .barra { height: 6px; margin-top: 10px; background: var(--fundo); }
+
+        #barra_preenchida {
+            height: 100%;
+            width: 0;
+            background: var(--lilas);
+            transition: width 0.4s;
+        }
+
+        .caixa ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            max-height: 160px;
+            overflow: auto;
+            font-size: 14px;
+        }
+
+        .caixa li {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(183, 148, 244, 0.15);
+        }
+
+        .explorar button {
+            padding: 8px;
+            margin-top: 6px;
+            width: 100%;
+            font: inherit;
+            color: var(--texto);
+            background: transparent;
+            border: 1px solid var(--lilas);
+            cursor: pointer;
+        }
+
+        .explorar button:hover { background: var(--lilas); color: var(--fundo); }
+        .explorar li button { width: auto; margin: 0; padding: 0 8px; }
+
+        /* Botão do status atual do país */
+        .explorar button.ativo {
+            background: var(--lilas);
+            color: var(--fundo);
+            font-weight: 600;
+        }
+
+        /* Celular: uma coluna só */
+        @media (max-width: 860px) {
+            .explorar { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <script src="../js/sessao.js"></script>
+    <script src="./../js/alerta.js"></script>
+
+    <!-- Bibliotecas do mapa. A ORDEM importa: d3 -> topojson -> datamaps -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.world.min.js"></script>
+</head>
+
+<body onload="validarSessao(); iniciarMapa()" style="background-color: #161618;">
+
+    <div class="janela">
+
+        <div class="header-left">
+            <h1>旅人</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="jornada.html"><h3>Minha Jornada</h3></a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./dashboard.html"><h3>Dashboard</h3></a>
+            </div>
+
+            <div class="btn-nav">
+                <h3>Explorar</h3>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+
+        <div class="dash-right">
+            <div class="explorar">
+
+                <!-- Coluna 1: o mapa -->
+                <div class="mapa-box">
+                    <div id="mapa"></div>
+
+                    <div class="legenda">
+                        <div><span class="bolinha visitado"></span>Visitado · 訪れた</div>
+                        <div><span class="bolinha desejo"></span>Quero visitar · 行きたい</div>
+                        <div><span class="bolinha vazio"></span>Inexplorado</div>
+                    </div>
+                </div>
+
+                <!-- Coluna 2: painel lateral -->
+                <div class="painel-lateral">
+
+                    <div class="caixa" id="caixa_selecionado">
+                        <h4>País selecionado</h4>
+                        <p class="dica">Clique em um país no mapa.</p>
+                    </div>
+
+                    <div class="caixa">
+                        <div class="numeros">
+                            <div><b id="qtd_visitados">0</b><span>visitados</span></div>
+                            <div><b id="qtd_desejos">0</b><span>na lista</span></div>
+                            <div><b id="perc_mundo">0%</b><span>do mundo</span></div>
+                        </div>
+                        <div class="barra"><div id="barra_preenchida"></div></div>
+                    </div>
+
+                    <div class="caixa">
+                        <h4>Visitados</h4>
+                        <ul id="lista_visitados"></ul>
+                    </div>
+
+                    <div class="caixa">
+                        <h4>Quero visitar</h4>
+                        <ul id="lista_desejos"></ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/explorar.js"></script>
+</body>
+
+</html>
+
+</html>
+<script>
+// ============================================================
+// Aba Explorar: mapa interativo (datamaps) + lugares do usuário
+// ============================================================
+
+// Nome do usuário no menu (igual ao compartilhar.html)
+document.getElementById("b_usuario").innerHTML = sessionStorage.NOME_USUARIO;
+
+// ---------- 1) DADOS ----------
+// "lugares" é um objeto onde a chave é o código do país (ISO3, ex: "BRA", "JPN")
+// e o valor guarda o status e o nome. Exemplo:
+// { BRA: { status: "visitado", nome: "Brazil" }, JPN: { status: "desejo", nome: "Japan" } }
+var lugares = {};
+var paisAtual = null;     // país clicado agora: { id: "BRA", nome: "Brazil" }
+var mapa;                 // objeto do datamaps
+var TOTAL_PAISES = 195;   // base para calcular o % do mundo
+
+// Cada usuário tem a sua própria chave, para um não ver os lugares do outro
+var CHAVE = "tabito_lugares_" + sessionStorage.ID_USUARIO;
+
+// Cor de cada status (precisa ser igual ao "fills" do mapa)
+var COR = {
+    visitado: "#c4a7ff",
+    desejo: "#d46ac6",
+    vazio: "#2a1650"
+};
+
+// Pinta UM país. Não usamos updateChoropleth porque o datamaps guarda a cor
+// antiga quando o mouse entra no país e a devolve quando o mouse sai, desfazendo
+// a mudança. Aqui trocamos a cor E atualizamos essa cor guardada.
+function pintar(id, status) {
+    var cor = COR[status] || COR.vazio;
+
+    var el = d3.selectAll(".datamaps-subunit").filter(function (d) {
+        return d.id === id;
+    });
+
+    el.style("fill", cor);
+
+    var guardado = el.attr("data-previousAttributes");
+    if (guardado) {
+        var obj = JSON.parse(guardado);
+        obj.fill = cor;
+        el.attr("data-previousAttributes", JSON.stringify(obj));
+    }
+}
+
+// ---------- 2) SALVAR E CARREGAR ----------
+// localStorage guarda texto no navegador. Por isso JSON.stringify (objeto -> texto)
+// ao salvar e JSON.parse (texto -> objeto) ao carregar.
+function salvar() {
+    localStorage.setItem(CHAVE, JSON.stringify(lugares));
+}
+
+function carregar() {
+    var texto = localStorage.getItem(CHAVE);
+    if (texto) {
+        lugares = JSON.parse(texto);
+    }
+}
+
+// ---------- 3) CRIAR O MAPA ----------
+function iniciarMapa() {
+    carregar();
+
+    mapa = new Datamap({
+        element: document.getElementById("mapa"),
+        projection: "mercator",
+        responsive: true,
+
+        // "fills" liga um nome (fillKey) a uma cor. Usamos esses nomes depois.
+        fills: {
+            defaultFill: "#2a1650",
+            visitado: "#c4a7ff",
+            desejo: "#d46ac6"
+        },
+
+        geographyConfig: {
+            borderColor: "#7c5cc4",
+            borderWidth: 0.6,
+            highlightFillColor: "#8b6ad8",
+            highlightBorderColor: "#efe6ff",
+            popupTemplate: function (pais) {
+                return '<div class="hoverinfo">' + pais.properties.name + '</div>';
+            }
+        },
+
+        // "done" roda quando o mapa termina de desenhar: aqui ligamos o clique
+        done: function (ds) {
+            ds.svg.selectAll(".datamaps-subunit").on("click", function (pais) {
+                paisAtual = { id: pais.id, nome: pais.properties.name };
+                mostrarSelecionado();
+            });
+
+            // Pinta no mapa o que já estava salvo
+            for (var id in lugares) {
+                pintar(id, lugares[id].status);
+            }
+        }
+    });
+
+    window.addEventListener("resize", function () { mapa.resize(); });
+
+    atualizarPainel();
+}
+
+// ---------- 4) MARCAR / REMOVER UM PAÍS ----------
+// status pode ser "visitado", "desejo" ou null (remover)
+function marcar(id, nome, status) {
+    if (status) {
+        lugares[id] = { status: status, nome: nome };
+    } else {
+        delete lugares[id];
+    }
+    salvar();
+
+    // Atualiza só a cor desse país no mapa
+    pintar(id, status);
+
+    atualizarPainel();
+    mostrarSelecionado();
+}
+
+// ---------- 5) CAIXA "PAÍS SELECIONADO" ----------
+function mostrarSelecionado() {
+    var caixa = document.getElementById("caixa_selecionado");
+    if (!paisAtual) return;
+
+    var atual = lugares[paisAtual.id];
+    var status = atual ? atual.status : null;
+
+    var texto = "Ainda inexplorado";
+    if (status == "visitado") texto = "Já visitado";
+    if (status == "desejo") texto = "Na lista de desejos";
+
+    // Botão que combina com o status atual recebe a classe "ativo"
+    var classeVisitado = status == "visitado" ? "ativo" : "";
+    var classeDesejo = status == "desejo" ? "ativo" : "";
+
+    caixa.innerHTML =
+        "<h4>País selecionado</h4>" +
+        "<div style='font-size:18px'>" + paisAtual.nome + "</div>" +
+        "<p class='dica'>" + texto + "</p>" +
+        "<button class='" + classeVisitado + "' onclick=\"alternar('visitado')\">Já visitei</button>" +
+        "<button class='" + classeDesejo + "' onclick=\"alternar('desejo')\">Quero visitar</button>";
+}
+
+// Clicar no botão que já está ativo desmarca; no outro, troca o status
+function alternar(novoStatus) {
+    var atual = lugares[paisAtual.id];
+
+    if (atual && atual.status == novoStatus) {
+        marcar(paisAtual.id, paisAtual.nome, null);
+    } else {
+        marcar(paisAtual.id, paisAtual.nome, novoStatus);
+    }
+}
+
+// ---------- 6) NÚMEROS E LISTAS ----------
+function atualizarPainel() {
+    var ulVisitados = document.getElementById("lista_visitados");
+    var ulDesejos = document.getElementById("lista_desejos");
+    ulVisitados.innerHTML = "";
+    ulDesejos.innerHTML = "";
+
+    var qtdVisitados = 0;
+    var qtdDesejos = 0;
+
+    // for...in percorre todas as chaves do objeto (BRA, JPN...)
+    for (var id in lugares) {
+        var item = "<li><span>" + lugares[id].nome + "</span>" +
+                   "<button onclick=\"removerDaLista('" + id + "')\">×</button></li>";
+
+        if (lugares[id].status == "visitado") {
+            ulVisitados.innerHTML += item;
+            qtdVisitados++;
+        } else {
+            ulDesejos.innerHTML += item;
+            qtdDesejos++;
+        }
+    }
+
+    var percentual = Math.round(qtdVisitados / TOTAL_PAISES * 100);
+
+    document.getElementById("qtd_visitados").innerHTML = qtdVisitados;
+    document.getElementById("qtd_desejos").innerHTML = qtdDesejos;
+    document.getElementById("perc_mundo").innerHTML = percentual + "%";
+    document.getElementById("barra_preenchida").style.width = (qtdVisitados / TOTAL_PAISES * 100) + "%";
+}
+
+function removerDaLista(id) {
+    marcar(id, "", null);
+}
+
+// ---------- 7) PRÓXIMO PASSO: SALVAR NO BANCO ----------
+// Hoje os dados ficam no navegador. Para a dashboard usar, troque salvar() por
+// um fetch igual ao do publicar() do compartilhar.html, por exemplo:
+//
+// fetch(`/lugares/salvar/${sessionStorage.ID_USUARIO}`, {
+//     method: "post",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ pais: id, nome: nome, status: status })
+// });
+//
+// No MySQL: tabela lugar (idLugar, fkUsuario, codigoPais, nomePais, status)
+// e a dashboard faz SELECT status, COUNT(*) ... GROUP BY status.
+</script>

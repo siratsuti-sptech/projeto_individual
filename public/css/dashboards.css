@@ -101,8 +101,7 @@ body::before {
 .topo-nav a.atual {
   color: #ffffff;
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 6px;
+ 
 }
 
 /* ---------- Conteúdo ---------- */
@@ -119,7 +118,7 @@ body::before {
   position: relative;
   margin-bottom: 28px;
   padding: 36px;
-  background: rgba(42, 19, 82, 0.72);
+  background: rgba(123, 84, 221, 0.72);
   border: 1px solid rgba(183, 148, 244, 0.45);
   border-radius: 6px;
   backdrop-filter: blur(4px);
@@ -330,5 +329,103 @@ body::before {
 
   .painel {
     padding: 24px 20px;
+  }
+}
+/* ---------- Capítulos do Japão ---------- */
+
+.capitulos {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 28px 0 36px;
+}
+
+.capitulo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+/* nos capítulos pares, a foto vai para a direita */
+.capitulo:nth-child(even) .capitulo-foto {
+  order: 2;
+}
+
+.capitulo-foto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(183, 148, 244, 0.45);
+  border-radius: 8px;
+}
+
+.ano {
+  color: var(--lilas-claro);
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+}
+
+.capitulo-texto h3 {
+  margin: 4px 0 8px;
+  color: #ffffff;
+}
+
+.capitulo-texto p {
+  margin: 0;
+  color: var(--suave);
+}
+
+.lados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.lado {
+  padding: 20px 24px;
+  background: var(--roxo-escuro);
+  border: 1px solid rgba(183, 148, 244, 0.35);
+  border-radius: 8px;
+}
+
+.lado h3 {
+  margin: 0 0 6px;
+  color: var(--lilas-claro);
+}
+
+.lado p {
+  margin: 0;
+  color: var(--suave);
+}
+
+.subtitulo {
+  margin: 0 0 18px;
+  color: var(--lilas-claro);
+}
+
+/* ---------- Aparecer ao rolar ---------- */
+
+.revelar {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.revelar.visivel {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .capitulo,
+  .lados {
+    grid-template-columns: 1fr;
+  }
+
+  .capitulo:nth-child(even) .capitulo-foto {
+    order: 0;
   }
 }
