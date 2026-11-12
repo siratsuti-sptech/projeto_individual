@@ -2,307 +2,373 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅人 | Tabito | Dashboards</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旅人 | Tabito | Dashboard</title>
+  <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
 
-    
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
-    <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
+  <!-- CSS compartilhado (menu, painel, cores) -->
+  <link rel="stylesheet" href="./../css/dashboards.css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+  <!-- CSS só desta página -->
+  <style>
+    .dashboard {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
+    }
 
-    <!-- scripts do Chart.js - 2022-1 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    .dica {
+      margin: 0 0 18px;
+      color: var(--suave);
+    }
 
-    <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    .dica a {
+      color: var(--lilas-claro);
+    }
+
+    /* ---------- números ---------- */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi {
+      padding: 18px;
+      text-align: center;
+      background: var(--roxo-escuro);
+      border: 1px solid rgba(183, 148, 244, 0.35);
+      border-radius: 8px;
+    }
+
+    .kpi b {
+      display: block;
+      font-family: 'Yuji Boku', cursive;
+      font-weight: 400;
+      font-size: 2.2rem;
+      color: var(--lilas-claro);
+    }
+
+    .kpi span {
+      color: var(--suave);
+      font-size: 0.95rem;
+    }
+
+    /* ---------- gráficos ---------- */
+    .graficos,
+    .listas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* O Chart.js precisa de uma caixa com altura definida para desenhar dentro dela */
+    .grafico-box {
+      position: relative;
+      height: 300px;
+    }
+
+    /* ---------- listas ---------- */
+    .listas ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .listas li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(183, 148, 244, 0.2);
+    }
+
+    .listas button {
+      padding: 0 10px;
+      font: inherit;
+      color: var(--lilas-claro);
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--lilas);
+      border-radius: 4px;
+    }
+
+    .listas button:hover {
+      color: #160a28;
+      background: var(--lilas);
+    }
+
+    .vazio {
+      margin: 0;
+      color: var(--suave);
+    }
+
+    @media (max-width: 760px) {
+      .kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .graficos,
+      .listas {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script src="../js/sessao.js"></script>
+
+  <!-- Chart.js: a biblioteca que desenha os gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
-<!-- <body onload=" atualizarFeed()"> -->
+<body onload="validarSessao(); montarDashboard()">
 
-<body>
+  <header class="topo">
+    <a class="marca" href="../index.html">
+      <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito">
+      <span class="kanji">旅人</span>
+      <span class="sep"></span>
+      <span class="nome">Tabito</span>
+    </a>
 
-    <div class="janela">
-        <div class="header-left">
-            <h1>旅人</h1>
+    <nav class="topo-nav">
+      <a href="./jornada.html">Minha Jornada</a>
+      <a class="atual" href="./dashboard.html">Dashboard</a>
+      <a href="./explorar.html">Explorar</a>
+      <a href="#" onclick="limparSessao(); return false;">Sair</a>
+    </nav>
+  </header>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+  <main class="dashboard">
 
-            <div class="btn-nav-white">
-                <a href="./jornada.html">
-                    <h3>Minha Jornada</h3>
-                </a>
-            </div>
+    <section class="painel">
+      <p class="kicker"><span class="selo">旅</span>Olá, <span id="b_usuario">viajante</span>!</p>
+      <h2 class="titulo-secao">Minha jornada em números</h2>
 
-            <div class="btn-nav">
+      <p class="dica" id="aviso_vazio" style="display: none;">
+        Você ainda não marcou nenhum país. Comece pelo <a href="./explorar.html">Explorar</a>.
+      </p>
 
-                <h3>Dashboard</h3>
+      <div class="kpis">
+        <div class="kpi"><b id="kpi_visitados">0</b><span>países visitados</span></div>
+        <div class="kpi"><b id="kpi_desejos">0</b><span>na lista de desejos</span></div>
+        <div class="kpi"><b id="kpi_mundo">0%</b><span>do mundo</span></div>
+        <div class="kpi"><b id="kpi_continentes">0 de 6</b><span>continentes</span></div>
+      </div>
+    </section>
 
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./explorar.html">
-                    <h3>Explorar</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
+    <section class="graficos">
+      <div class="painel">
+        <h3 class="subtitulo">Visitados e lista de desejos</h3>
+        <div class="grafico-box">
+          <canvas id="grafico_status" aria-label="Rosca com a quantidade de países visitados e na lista de desejos"></canvas>
         </div>
+      </div>
 
-        <div class="dash">
-            <div id="alerta">
-            </div>
-
-            <div class="btns-dash" id="btnAquario">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
-            <div id="graficos">
-            </div>
+      <div class="painel">
+        <h3 class="subtitulo">Países por continente</h3>
+        <div class="grafico-box">
+          <canvas id="grafico_continentes" aria-label="Barras com os países visitados e desejados em cada continente"></canvas>
         </div>
-    </div>
+      </div>
+    </section>
 
+    <section class="listas">
+      <div class="painel">
+        <h3 class="subtitulo">Visitados</h3>
+        <ul id="lista_visitados"></ul>
+      </div>
+
+      <div class="painel">
+        <h3 class="subtitulo">Quero visitar</h3>
+        <ul id="lista_desejos"></ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ============================================================
+    // Dashboard: lê o que o usuário marcou no Explorar e mostra em números e gráficos.
+    // Fluxo: carregar() -> contar -> mostrar números -> criar gráficos -> listas
+    // ============================================================
+
+    var TOTAL_PAISES = 195;   // base para calcular o % do mundo
+    var CONTINENTES = ["África", "América do Norte", "América do Sul", "Ásia", "Europa", "Oceania"];
+
+    // A MESMA chave que o Explorar usa para salvar
+    var CHAVE = "tabito_lugares_" + sessionStorage.ID_USUARIO;
+
+    var lugares = {};            // { BRA: { status, nome, continente }, ... }
+    var graficoStatus;           // guardamos os gráficos para poder destruir antes de refazer
+    var graficoContinentes;
+
+    // ---------- 1) LER E SALVAR OS DADOS ----------
+    function carregar() {
+      var texto = localStorage.getItem(CHAVE);
+      lugares = texto ? JSON.parse(texto) : {};
+    }
+
+    function salvar() {
+      localStorage.setItem(CHAVE, JSON.stringify(lugares));
+    }
+
+    // ---------- 2) MONTAR A PÁGINA ----------
+    function montarDashboard() {
+      carregar();
+
+      // ----- CONTAR -----
+      var visitados = 0;
+      var desejos = 0;
+      var visitadosPorContinente = {};
+      var desejosPorContinente = {};
+
+      // começa todos os continentes com zero
+      for (var i = 0; i < CONTINENTES.length; i++) {
+        visitadosPorContinente[CONTINENTES[i]] = 0;
+        desejosPorContinente[CONTINENTES[i]] = 0;
+      }
+
+      // percorre tudo o que o usuário marcou
+      for (var id in lugares) {
+        var lugar = lugares[id];
+
+        if (lugar.status == "visitado") {
+          visitados++;
+          if (visitadosPorContinente[lugar.continente] != undefined) {
+            visitadosPorContinente[lugar.continente]++;
+          }
+        } else if (lugar.status == "desejo") {
+          desejos++;
+          if (desejosPorContinente[lugar.continente] != undefined) {
+            desejosPorContinente[lugar.continente]++;
+          }
+        }
+      }
+
+      // quantos continentes têm pelo menos 1 país visitado
+      var continentesVisitados = 0;
+      for (var i = 0; i < CONTINENTES.length; i++) {
+        if (visitadosPorContinente[CONTINENTES[i]] > 0) {
+          continentesVisitados++;
+        }
+      }
+
+      // ----- MOSTRAR OS NÚMEROS -----
+      document.getElementById("kpi_visitados").innerHTML = visitados;
+      document.getElementById("kpi_desejos").innerHTML = desejos;
+      document.getElementById("kpi_mundo").innerHTML = Math.round(visitados / TOTAL_PAISES * 100) + "%";
+      document.getElementById("kpi_continentes").innerHTML = continentesVisitados + " de 6";
+
+      // se não tem nada marcado, mostra o aviso
+      var vazio = (visitados + desejos) == 0;
+      document.getElementById("aviso_vazio").style.display = vazio ? "block" : "none";
+
+      // ----- GRÁFICOS -----
+      // Os gráficos usam a cor e a fonte do site
+      Chart.defaults.color = "#d9c4fa";
+      Chart.defaults.font.family = "'Klee One', cursive";
+
+      // Se já existe um gráfico nesse canvas, destrói antes de criar outro.
+      // Sem isso, ao atualizar a página (ou remover um país) o Chart.js dá erro.
+      if (graficoStatus) graficoStatus.destroy();
+      if (graficoContinentes) graficoContinentes.destroy();
+
+      // Gráfico 1: ROSCA (doughnut) com dois pedaços
+      graficoStatus = new Chart(document.getElementById("grafico_status"), {
+        type: "doughnut",
+        data: {
+          labels: ["Visitados", "Quero visitar"],
+          datasets: [{
+            data: [visitados, desejos],
+            backgroundColor: ["#c4a7ff", "#d46ac6"],
+            borderColor: "#160a28"
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          cutout: "60%",
+          plugins: { legend: { position: "bottom" } }
+        }
+      });
+
+      // Gráfico 2: BARRAS EMPILHADAS, uma barra por continente e dois "datasets"
+      // (visitados e desejos). Cada dataset precisa de uma lista com um valor por label.
+      var dadosVisitados = [];
+      var dadosDesejos = [];
+      for (var i = 0; i < CONTINENTES.length; i++) {
+        dadosVisitados.push(visitadosPorContinente[CONTINENTES[i]]);
+        dadosDesejos.push(desejosPorContinente[CONTINENTES[i]]);
+      }
+
+      graficoContinentes = new Chart(document.getElementById("grafico_continentes"), {
+        type: "bar",
+        data: {
+          labels: CONTINENTES,
+          datasets: [
+            { label: "Visitados", data: dadosVisitados, backgroundColor: "#c4a7ff" },
+            { label: "Quero visitar", data: dadosDesejos, backgroundColor: "#d46ac6" }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: { legend: { position: "bottom" } },
+          scales: {
+            x: { stacked: true, grid: { display: false } },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: { precision: 0 },          // só números inteiros
+              grid: { color: "rgba(183, 148, 244, 0.15)" }
+            }
+          }
+        }
+      });
+
+      // ----- LISTAS -----
+      montarLista("visitado", "lista_visitados", "Nenhum país visitado ainda.");
+      montarLista("desejo", "lista_desejos", "Sua lista de desejos está vazia.");
+    }
+
+    // Monta uma lista (visitados ou desejos) em ordem alfabética
+    function montarLista(status, idLista, textoVazio) {
+      var ids = [];
+      for (var id in lugares) {
+        if (lugares[id].status == status) {
+          ids.push(id);
+        }
+      }
+
+      ids.sort(function (a, b) {
+        return lugares[a].nome.localeCompare(lugares[b].nome);
+      });
+
+      var html = "";
+      for (var i = 0; i < ids.length; i++) {
+        var lugar = lugares[ids[i]];
+        html += `
+          <li>
+            <span>${lugar.nome}</span>
+            <button type="button" aria-label="Remover ${lugar.nome}" onclick="remover('${ids[i]}')">×</button>
+          </li>`;
+      }
+
+      if (html == "") {
+        html = "<li><p class='vazio'>" + textoVazio + "</p></li>";
+      }
+      document.getElementById(idLista).innerHTML = html;
+    }
+
+    // ---------- 3) REMOVER UM PAÍS ----------
+    function remover(id) {
+      delete lugares[id];
+      salvar();
+      montarDashboard();   // refaz números, gráficos e listas com os dados novos
+    }
+  </script>
 
 </body>
 
 </html>
-
-<script>
-    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-
-    let proximaAtualizacao;
-
-    window.onload = exibirAquariosDoUsuario();
-
-    function exibirAquariosDoUsuario() {
-        var aquarios = JSON.parse(sessionStorage.AQUARIOS);
-        aquarios.forEach(item => {
-            document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
-            `
-
-            document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id}">${item.descricao}</span>
-                    </h3>
-                    <div class="graph">
-                        <canvas id="myChartCanvas${item.id}"></canvas>
-                    </div>
-                    <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
-                    </div>
-                </div>
-            `
-
-            obterDadosGrafico(item.id)
-        });
-
-        if (aquarios.length > 0) {
-            exibirAquario(aquarios[0].id)
-        }
-    }
-
-    function alterarTitulo(idAquario) {
-        var tituloAquario = document.getElementById(`tituloAquario${idAquario}`)
-        var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
-        tituloAquario.innerHTML = "Últimas medidas do <span style='color: #e6005a'>" + descricao + "</span>"
-    }
-
-    function exibirAquario(idAquario) {
-        let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
-
-        for (i = 0; i < todosOsGraficos.length; i++) {
-            // exibindo - ou não - o gráfico
-            if (todosOsGraficos[i].id != idAquario) {
-                let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].id}`)
-                if (elementoAtual.classList.contains("display-block")) {
-                    elementoAtual.classList.remove("display-block")
-                }
-                elementoAtual.classList.add("display-none")
-
-                // alterando estilo do botão
-                let btnAtual = document.getElementById(`btnAquario${todosOsGraficos[i].id}`)
-                if (btnAtual.classList.contains("btn-pink")) {
-                    btnAtual.classList.remove("btn-pink")
-                }
-                btnAtual.classList.add("btn-white")
-            }
-        }
-
-        // exibindo - ou não - o gráfico
-        let graficoExibir = document.getElementById(`grafico${idAquario}`)
-        graficoExibir.classList.remove("display-none")
-        graficoExibir.classList.add("display-block")
-
-        // alterando estilo do botão
-        let btnExibir = document.getElementById(`btnAquario${idAquario}`)
-        btnExibir.classList.remove("btn-white")
-        btnExibir.classList.add("btn-pink")
-    }
-
-    // O gráfico é construído com três funções:
-    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
-    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
-    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
-
-    // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
-    // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
-    // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
-
-    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-    //     Para ajustar o "select", ajuste o comando sql em src/models
-    function obterDadosGrafico(idAquario) {
-
-        alterarTitulo(idAquario)
-
-        if (proximaAtualizacao != undefined) {
-            clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/medidas/ultimas/${idAquario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-                    plotarGrafico(resposta, idAquario);
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
-
-    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
-    function plotarGrafico(resposta, idAquario) {
-
-        console.log('iniciando plotagem do gráfico...');
-
-        // Criando estrutura para plotar gráfico - labels
-        let labels = [];
-
-        // Criando estrutura para plotar gráfico - dados
-        let dados = {
-            labels: labels,
-            datasets: [
-            {
-                label: 'Temperatura',
-                data: [],
-                fill: false,
-                borderColor: 'rgb(199, 52, 52)',
-                tension: 0.1
-            }]
-        };
-
-        console.log('----------------------------------------------')
-        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-        console.log(resposta)
-
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (i = 0; i < resposta.length; i++) {
-            var registro = resposta[i];
-            labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.temperatura);
-        }
-
-        console.log('----------------------------------------------')
-        console.log('O gráfico será plotado com os respectivos valores:')
-        console.log('Labels:')
-        console.log(labels)
-        console.log('Dados:')
-        console.log(dados.datasets)
-        console.log('----------------------------------------------')
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-            type: 'line',
-            data: dados,
-        };
-
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(
-            document.getElementById(`myChartCanvas${idAquario}`),
-            config
-        );
-
-        setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-    }
-
-
-    // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
-    // buscando a última medida inserida em tabela contendo as capturas, 
-
-    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-    //     Para ajustar o "select", ajuste o comando sql em src/models
-    function atualizarGrafico(idAquario, dados, myChart) {
-
-
-
-        fetch(`/medidas/tempo-real/${idAquario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (novoRegistro) {
-
-                    obterdados(idAquario);
-                    // alertar(novoRegistro, idAquario);
-                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                    console.log(`Dados atuais do gráfico:`);
-                    console.log(dados);
-
-                    let avisoCaptura = document.getElementById(`avisoCaptura${idAquario}`)
-                    avisoCaptura.innerHTML = ""
-
-
-                    if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                        console.log("---------------------------------------------------------------")
-                        console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                        avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                        console.log("Horário do novo dado capturado:")
-                        console.log(novoRegistro[0].momento_grafico)
-                        console.log("Horário do último dado capturado:")
-                        console.log(dados.labels[dados.labels.length - 1])
-                        console.log("---------------------------------------------------------------")
-                    } else {
-                        // tirando e colocando valores no gráfico
-                        dados.labels.shift(); // apagar o primeiro
-                        dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
-
-                        dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-                        dados.datasets[0].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
-
-                        myChart.update();
-                    }
-
-                    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-
-    }
-</script>
