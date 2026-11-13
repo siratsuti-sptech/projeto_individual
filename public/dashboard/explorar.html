@@ -1,412 +1,557 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>旅人 | Tabito | Explorar</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png"
+      type="image/x-icon"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>旅人 | Tabito | Explorar</title>
-  <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
+    <!-- CSS compartilhado (menu, painel, cores) -->
+    <link rel="stylesheet" href="./../css/dashboards.css" />
 
-  <!-- CSS compartilhado (menu, painel, cores) -->
-  <link rel="stylesheet" href="./../css/dashboards.css">
-
-  <!-- CSS só desta página -->
-  <style>
-    .explorar {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 36px 20px 80px;
-    }
-
-    .dica {
-      margin: 0 0 18px;
-      color: var(--suave);
-    }
-
-    .contadores {
-      display: flex;
-      gap: 28px;
-      margin-bottom: 22px;
-      color: var(--suave);
-    }
-
-    .contadores b {
-      font-family: 'Yuji Boku', cursive;
-      font-weight: 400;
-      font-size: 1.8rem;
-      color: var(--lilas-claro);
-    }
-
-    /* ---------- busca e filtros ---------- */
-    .ferramentas {
-      display: grid;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-
-    #busca {
-      width: 100%;
-      max-width: 380px;
-      padding: 10px 14px;
-      font: inherit;
-      color: var(--texto);
-      background: var(--roxo-escuro);
-      border: 1px solid rgba(183, 148, 244, 0.45);
-      border-radius: 8px;
-    }
-
-    #busca::placeholder {
-      color: var(--suave);
-    }
-
-    .filtros {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .filtros button {
-      padding: 6px 14px;
-      font: inherit;
-      color: var(--lilas-claro);
-      cursor: pointer;
-      background: transparent;
-      border: 1px solid var(--lilas);
-      border-radius: 20px;
-    }
-
-    .filtros button.ativo {
-      color: #160a28;
-      background: var(--lilas);
-    }
-
-    /* ---------- cartões dos países ---------- */
-    .grade-paises {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 14px;
-    }
-
-    /* cada país é um botão (dá para usar com o teclado também) */
-    .pais {
-      padding: 14px;
-      font: inherit;
-      text-align: center;
-      color: var(--texto);
-      cursor: pointer;
-      background: var(--roxo-escuro);
-      border: 1px solid rgba(183, 148, 244, 0.35);
-      border-radius: 8px;
-      transition: transform 0.2s, background 0.2s;
-    }
-
-    .pais:hover {
-      transform: translateY(-3px);
-      border-color: var(--lilas);
-    }
-
-    .pais:focus-visible,
-    .filtros button:focus-visible,
-    #busca:focus-visible {
-      outline: 2px solid var(--lilas-claro);
-      outline-offset: 2px;
-    }
-
-    .pais h3 {
-      margin: 0;
-    }
-
-    .pais .jp,
-    .pais small {
-      display: block;
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
-
-    .pais p {
-      margin: 8px 0 0;
-      font-size: 0.9rem;
-    }
-
-    /* o status do país vira a classe do cartão, e cada classe tem uma cor */
-    .pais.visitado {
-      background: #c4a7ff;
-      color: #160a28;
-    }
-
-    .pais.desejo {
-      background: #d46ac6;
-      color: #160a28;
-    }
-
-    .vazio {
-      grid-column: 1 / -1;
-      color: var(--suave);
-    }
-  </style>
-
-  <!-- Só o sessao.js fica em arquivo separado, porque todas as páginas usam -->
-  <script src="../js/sessao.js"></script>
-</head>
-
-<body onload="validarSessao(); iniciarExplorar()">
-
-  <header class="topo">
-    <a class="marca" href="../index.html">
-      <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito">
-      <span class="kanji">旅人</span>
-      <span class="sep"></span>
-      <span class="nome">Tabito</span>
-    </a>
-
-    <nav class="topo-nav">
-      <a href="./jornada.html">Minha Jornada</a>
-      <a href="./dashboard.html">Dashboard</a>
-      <a class="atual" href="./explorar.html">Explorar</a>
-      <a href="#" onclick="limparSessao(); return false;">Sair</a>
-    </nav>
-  </header>
-
-  <main class="explorar">
-    <section class="painel">
-      <p class="kicker"><span class="selo">旅</span>Explorar</p>
-      <h2 class="titulo-secao">Quais países fazem parte da sua jornada?</h2>
-      <p class="dica">Clique em um país para mudar: inexplorado, já visitei ou quero visitar.</p>
-
-      <div class="contadores">
-        <div><b id="qtd_visitados">0</b> visitados</div>
-        <div><b id="qtd_desejos">0</b> na lista</div>
-      </div>
-
-      <div class="ferramentas">
-        <input type="search" id="busca" placeholder="Buscar país..." oninput="buscar(this.value)">
-        <div class="filtros" id="filtros"></div>
-      </div>
-
-      <div class="grade-paises" id="grade_paises"></div>
-    </section>
-  </main>
-
-  <script>
-    // ============================================================
-    // Explorar: o usuário marca os países da sua jornada.
-    // Fluxo: clique -> alternar() -> salvar() -> desenhar()
-    // ============================================================
-
-    // ---------- 1) DADOS ----------
-    // Para acrescentar um país, copie uma linha, troque os três textos
-    // ["código", "nome em português", "nome em japonês"] e cole no continente certo.
-    var DADOS = {
-      "Ásia": [
-        ["JPN", "Japão", "日本"], ["KOR", "Coreia do Sul", "韓国"], ["PRK", "Coreia do Norte", "北朝鮮"],
-        ["CHN", "China", "中国"], ["TWN", "Taiwan", "台湾"], ["MNG", "Mongólia", "モンゴル"],
-        ["THA", "Tailândia", "タイ"], ["VNM", "Vietnã", "ベトナム"], ["KHM", "Camboja", "カンボジア"],
-        ["LAO", "Laos", "ラオス"], ["MMR", "Mianmar", "ミャンマー"], ["MYS", "Malásia", "マレーシア"],
-        ["SGP", "Singapura", "シンガポール"], ["IDN", "Indonésia", "インドネシア"], ["PHL", "Filipinas", "フィリピン"],
-        ["IND", "Índia", "インド"], ["NPL", "Nepal", "ネパール"], ["LKA", "Sri Lanka", "スリランカ"],
-        ["BGD", "Bangladesh", "バングラデシュ"], ["PAK", "Paquistão", "パキスタン"], ["MDV", "Maldivas", "モルディブ"],
-        ["TUR", "Turquia", "トルコ"], ["ISR", "Israel", "イスラエル"], ["JOR", "Jordânia", "ヨルダン"],
-        ["ARE", "Emirados Árabes", "アラブ首長国連邦"], ["SAU", "Arábia Saudita", "サウジアラビア"],
-        ["QAT", "Catar", "カタール"], ["IRN", "Irã", "イラン"], ["KAZ", "Cazaquistão", "カザフスタン"],
-        ["UZB", "Uzbequistão", "ウズベキスタン"]
-      ],
-      "Europa": [
-        ["PRT", "Portugal", "ポルトガル"], ["ESP", "Espanha", "スペイン"], ["FRA", "França", "フランス"],
-        ["GBR", "Reino Unido", "イギリス"], ["IRL", "Irlanda", "アイルランド"], ["ITA", "Itália", "イタリア"],
-        ["VAT", "Vaticano", "バチカン"], ["DEU", "Alemanha", "ドイツ"], ["NLD", "Holanda", "オランダ"],
-        ["BEL", "Bélgica", "ベルギー"], ["LUX", "Luxemburgo", "ルクセンブルク"], ["CHE", "Suíça", "スイス"],
-        ["AUT", "Áustria", "オーストリア"], ["GRC", "Grécia", "ギリシャ"], ["MLT", "Malta", "マルタ"],
-        ["MCO", "Mônaco", "モナコ"], ["SMR", "San Marino", "サンマリノ"], ["AND", "Andorra", "アンドラ"],
-        ["LIE", "Liechtenstein", "リヒテンシュタイン"], ["CZE", "Chéquia", "チェコ"], ["SVK", "Eslováquia", "スロバキア"],
-        ["POL", "Polônia", "ポーランド"], ["HUN", "Hungria", "ハンガリー"], ["HRV", "Croácia", "クロアチア"],
-        ["SVN", "Eslovênia", "スロベニア"], ["ROU", "Romênia", "ルーマニア"], ["BGR", "Bulgária", "ブルガリア"],
-        ["SRB", "Sérvia", "セルビア"], ["ALB", "Albânia", "アルバニア"], ["BIH", "Bósnia e Herzegovina", "ボスニア・ヘルツェゴビナ"],
-        ["MNE", "Montenegro", "モンテネグロ"], ["MKD", "Macedônia do Norte", "北マケドニア"], ["CYP", "Chipre", "キプロス"],
-        ["DNK", "Dinamarca", "デンマーク"], ["SWE", "Suécia", "スウェーデン"], ["NOR", "Noruega", "ノルウェー"],
-        ["FIN", "Finlândia", "フィンランド"], ["ISL", "Islândia", "アイスランド"], ["EST", "Estônia", "エストニア"],
-        ["LVA", "Letônia", "ラトビア"], ["LTU", "Lituânia", "リトアニア"], ["UKR", "Ucrânia", "ウクライナ"],
-        ["RUS", "Rússia", "ロシア"]
-      ],
-      "América do Sul": [
-        ["BRA", "Brasil", "ブラジル"], ["ARG", "Argentina", "アルゼンチン"], ["CHL", "Chile", "チリ"],
-        ["PER", "Peru", "ペルー"], ["URY", "Uruguai", "ウルグアイ"], ["PRY", "Paraguai", "パラグアイ"],
-        ["BOL", "Bolívia", "ボリビア"], ["COL", "Colômbia", "コロンビア"], ["VEN", "Venezuela", "ベネズエラ"],
-        ["ECU", "Equador", "エクアドル"], ["GUY", "Guiana", "ガイアナ"], ["SUR", "Suriname", "スリナム"]
-      ],
-      "América do Norte": [
-        ["USA", "Estados Unidos", "アメリカ"], ["CAN", "Canadá", "カナダ"], ["MEX", "México", "メキシコ"],
-        ["CUB", "Cuba", "キューバ"], ["JAM", "Jamaica", "ジャマイカ"], ["DOM", "República Dominicana", "ドミニカ共和国"],
-        ["HTI", "Haiti", "ハイチ"], ["BHS", "Bahamas", "バハマ"], ["BRB", "Barbados", "バルバドス"],
-        ["TTO", "Trinidad e Tobago", "トリニダード・トバゴ"], ["PAN", "Panamá", "パナマ"], ["CRI", "Costa Rica", "コスタリカ"],
-        ["NIC", "Nicarágua", "ニカラグア"], ["HND", "Honduras", "ホンジュラス"], ["SLV", "El Salvador", "エルサルバドル"],
-        ["GTM", "Guatemala", "グアテマラ"], ["BLZ", "Belize", "ベリーズ"]
-      ],
-      "África": [
-        ["EGY", "Egito", "エジプト"], ["MAR", "Marrocos", "モロッコ"], ["TUN", "Tunísia", "チュニジア"],
-        ["DZA", "Argélia", "アルジェリア"], ["LBY", "Líbia", "リビア"], ["ZAF", "África do Sul", "南アフリカ"],
-        ["NAM", "Namíbia", "ナミビア"], ["BWA", "Botsuana", "ボツワナ"], ["ZWE", "Zimbábue", "ジンバブエ"],
-        ["ZMB", "Zâmbia", "ザンビア"], ["MOZ", "Moçambique", "モザンビーク"], ["AGO", "Angola", "アンゴラ"],
-        ["KEN", "Quênia", "ケニア"], ["TZA", "Tanzânia", "タンザニア"], ["UGA", "Uganda", "ウガンダ"],
-        ["RWA", "Ruanda", "ルワンダ"], ["ETH", "Etiópia", "エチオピア"], ["SDN", "Sudão", "スーダン"],
-        ["NGA", "Nigéria", "ナイジェリア"], ["GHA", "Gana", "ガーナ"], ["SEN", "Senegal", "セネガル"],
-        ["CIV", "Costa do Marfim", "コートジボワール"], ["CMR", "Camarões", "カメルーン"],
-        ["COD", "República Democrática do Congo", "コンゴ民主共和国"], ["CPV", "Cabo Verde", "カーボベルデ"],
-        ["MDG", "Madagascar", "マダガスカル"], ["MUS", "Maurício", "モーリシャス"], ["SYC", "Seicheles", "セーシェル"]
-      ],
-      "Oceania": [
-        ["AUS", "Austrália", "オーストラリア"], ["NZL", "Nova Zelândia", "ニュージーランド"], ["FJI", "Fiji", "フィジー"],
-        ["PNG", "Papua-Nova Guiné", "パプアニューギニア"], ["WSM", "Samoa", "サモア"], ["TON", "Tonga", "トンガ"],
-        ["VUT", "Vanuatu", "バヌアツ"], ["PLW", "Palau", "パラオ"]
-      ]
-    };
-
-    // Transforma o DADOS em uma lista única de países (cada um já com o seu continente)
-    var PAISES = [];
-    for (var continente in DADOS) {
-      for (var i = 0; i < DADOS[continente].length; i++) {
-        var p = DADOS[continente][i];
-        PAISES.push({ id: p[0], nome: p[1], jp: p[2], continente: continente });
-      }
-    }
-
-    // Cada usuário tem a sua própria chave, para um não ver os lugares do outro
-    var CHAVE = "tabito_lugares_" + sessionStorage.ID_USUARIO;
-
-    // Guarda só as escolhas do usuário. Exemplo:
-    // { BRA: { status: "visitado", nome: "Brasil", continente: "América do Sul" } }
-    var lugares = {};
-
-    // O que o usuário está filtrando agora
-    var filtroContinente = "Todos";
-    var textoBusca = "";
-
-    // ---------- 2) SALVAR E CARREGAR ----------
-    // O localStorage só guarda texto: JSON.stringify vira texto, JSON.parse volta a objeto
-    function salvar() {
-      localStorage.setItem(CHAVE, JSON.stringify(lugares));
-    }
-
-    function carregar() {
-      var texto = localStorage.getItem(CHAVE);
-      if (texto) {
-        lugares = JSON.parse(texto);
-      }
-    }
-
-    // ---------- 3) DESENHAR ----------
-    // Tira acentos e maiúsculas, para "japao" achar "Japão"
-    function simplificar(texto) {
-      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    }
-
-    function desenharFiltros() {
-      var nomes = ["Todos"];
-      for (var c in DADOS) {
-        nomes.push(c);
+    <!-- CSS só desta página -->
+    <style>
+      .explorar {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 36px 20px 80px;
       }
 
-      var html = "";
-      for (var i = 0; i < nomes.length; i++) {
-        var classe = nomes[i] == filtroContinente ? "ativo" : "";
-        html += `<button type="button" class="${classe}" onclick="filtrar('${nomes[i]}')">${nomes[i]}</button>`;
+      .dica {
+        margin: 0 0 18px;
+        color: var(--suave);
       }
-      document.getElementById("filtros").innerHTML = html;
-    }
 
-    function desenhar() {
-      var html = "";
-      var mostrados = 0;
+      .contadores {
+        display: flex;
+        gap: 28px;
+        margin-bottom: 22px;
+        color: var(--suave);
+      }
 
-      for (var i = 0; i < PAISES.length; i++) {
-        var pais = PAISES[i];
+      .contadores b {
+        font-family: "Yuji Boku", cursive;
+        font-weight: 400;
+        font-size: 1.8rem;
+        color: var(--lilas-claro);
+      }
 
-        // Pula os países que não combinam com o filtro ou com a busca
-        if (filtroContinente != "Todos" && pais.continente != filtroContinente) continue;
-        if (textoBusca != "" && simplificar(pais.nome).indexOf(simplificar(textoBusca)) == -1) continue;
+      /* ---------- busca e filtros ---------- */
+      .ferramentas {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 22px;
+      }
 
-        // Se o país não está em "lugares", ele é inexplorado
-        var status = "vazio";
-        if (lugares[pais.id]) {
-          status = lugares[pais.id].status;
+      #busca {
+        width: 100%;
+        max-width: 380px;
+        padding: 10px 14px;
+        font: inherit;
+        color: var(--texto);
+        background: var(--roxo-escuro);
+        border: 1px solid rgba(183, 148, 244, 0.45);
+        border-radius: 8px;
+      }
+
+      #busca::placeholder {
+        color: var(--suave);
+      }
+
+      .filtros {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .filtros button {
+        padding: 6px 14px;
+        font: inherit;
+        color: var(--lilas-claro);
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid var(--lilas);
+        border-radius: 20px;
+      }
+
+      .filtros button.ativo {
+        color: #160a28;
+        background: var(--lilas);
+      }
+
+      /* ---------- cartões dos países ---------- */
+      .grade-paises {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 14px;
+      }
+
+      /* cada país é um botão (dá para usar com o teclado também) */
+      .pais {
+        padding: 14px;
+        font: inherit;
+        text-align: center;
+        color: var(--texto);
+        cursor: pointer;
+        background: var(--roxo-escuro);
+        border: 1px solid rgba(183, 148, 244, 0.35);
+        border-radius: 8px;
+        transition: transform 0.2s, background 0.2s;
+      }
+
+      .pais:hover {
+        transform: translateY(-3px);
+        border-color: var(--lilas);
+      }
+
+      .pais:focus-visible,
+      .filtros button:focus-visible,
+      #busca:focus-visible {
+        outline: 2px solid var(--lilas-claro);
+        outline-offset: 2px;
+      }
+
+      .pais h3 {
+        margin: 0;
+      }
+
+      .pais .jp,
+      .pais small {
+        display: block;
+        font-size: 0.85rem;
+        opacity: 0.85;
+      }
+
+      .pais p {
+        margin: 8px 0 0;
+        font-size: 0.9rem;
+      }
+
+      /* o status do país vira a classe do cartão, e cada classe tem uma cor */
+      .pais.visitado {
+        background: #c4a7ff;
+        color: #160a28;
+      }
+
+      .pais.desejo {
+        background: #d46ac6;
+        color: #160a28;
+      }
+
+      .vazio {
+        grid-column: 1 / -1;
+        color: var(--suave);
+      }
+    </style>
+
+    <!-- Só o sessao.js fica em arquivo separado, porque todas as páginas usam -->
+    <script src="../js/sessao.js"></script>
+  </head>
+
+  <body onload="validarSessao(); iniciarExplorar()">
+    <header class="topo">
+      <a class="marca" href="../index.html">
+        <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito" />
+        <span class="kanji">旅人</span>
+        <span class="sep"></span>
+        <span class="nome">Tabito</span>
+      </a>
+
+      <nav class="topo-nav">
+        <a href="./jornada.html">Minha Jornada</a>
+        <a href="./dashboard.html">Dashboard</a>
+        <a class="atual" href="./explorar.html">Explorar</a>
+        <a href="#" onclick="limparSessao(); return false;">Sair</a>
+      </nav>
+    </header>
+
+    <main class="explorar">
+      <section class="painel">
+        <p class="kicker"><span class="selo">旅</span>Explorar</p>
+        <h2 class="titulo-secao">Quais países fazem parte da sua jornada?</h2>
+        <p class="dica">
+          Clique em um país para mudar: inexplorado, já visitei ou quero
+          visitar.
+        </p>
+
+        <div class="contadores">
+          <div><b id="qtd_visitados">0</b> visitados</div>
+          <div><b id="qtd_desejos">0</b> na lista</div>
+        </div>
+
+        <div class="ferramentas">
+          <input
+            type="search"
+            id="busca"
+            placeholder="Buscar país..."
+            oninput="buscar(this.value)"
+          />
+          <div class="filtros" id="filtros"></div>
+        </div>
+
+        <div class="grade-paises" id="grade_paises"></div>
+      </section>
+    </main>
+
+    <script>
+      // ============================================================
+      // Explorar: o usuário marca os países da sua jornada.
+      // Fluxo: clique -> alternar() -> salvar() -> desenhar()
+      // ============================================================
+
+      // ---------- 1) DADOS ----------
+      // Para acrescentar um país, copie uma linha, troque os três textos
+      // ["código", "nome em português", "nome em japonês"] e cole no continente certo.
+      var DADOS = {
+        Ásia: [
+          ["JPN", "Japão", "日本"],
+          ["KOR", "Coreia do Sul", "韓国"],
+          ["PRK", "Coreia do Norte", "北朝鮮"],
+          ["CHN", "China", "中国"],
+          ["TWN", "Taiwan", "台湾"],
+          ["MNG", "Mongólia", "モンゴル"],
+          ["THA", "Tailândia", "タイ"],
+          ["VNM", "Vietnã", "ベトナム"],
+          ["KHM", "Camboja", "カンボジア"],
+          ["LAO", "Laos", "ラオス"],
+          ["MMR", "Mianmar", "ミャンマー"],
+          ["MYS", "Malásia", "マレーシア"],
+          ["SGP", "Singapura", "シンガポール"],
+          ["IDN", "Indonésia", "インドネシア"],
+          ["PHL", "Filipinas", "フィリピン"],
+          ["IND", "Índia", "インド"],
+          ["NPL", "Nepal", "ネパール"],
+          ["LKA", "Sri Lanka", "スリランカ"],
+          ["BGD", "Bangladesh", "バングラデシュ"],
+          ["PAK", "Paquistão", "パキスタン"],
+          ["MDV", "Maldivas", "モルディブ"],
+          ["TUR", "Turquia", "トルコ"],
+          ["ISR", "Israel", "イスラエル"],
+          ["JOR", "Jordânia", "ヨルダン"],
+          ["ARE", "Emirados Árabes", "アラブ首長国連邦"],
+          ["SAU", "Arábia Saudita", "サウジアラビア"],
+          ["QAT", "Catar", "カタール"],
+          ["IRN", "Irã", "イラン"],
+          ["KAZ", "Cazaquistão", "カザフスタン"],
+          ["UZB", "Uzbequistão", "ウズベキスタン"],
+        ],
+        Europa: [
+          ["PRT", "Portugal", "ポルトガル"],
+          ["ESP", "Espanha", "スペイン"],
+          ["FRA", "França", "フランス"],
+          ["GBR", "Reino Unido", "イギリス"],
+          ["IRL", "Irlanda", "アイルランド"],
+          ["ITA", "Itália", "イタリア"],
+          ["VAT", "Vaticano", "バチカン"],
+          ["DEU", "Alemanha", "ドイツ"],
+          ["NLD", "Holanda", "オランダ"],
+          ["BEL", "Bélgica", "ベルギー"],
+          ["LUX", "Luxemburgo", "ルクセンブルク"],
+          ["CHE", "Suíça", "スイス"],
+          ["AUT", "Áustria", "オーストリア"],
+          ["GRC", "Grécia", "ギリシャ"],
+          ["MLT", "Malta", "マルタ"],
+          ["MCO", "Mônaco", "モナコ"],
+          ["SMR", "San Marino", "サンマリノ"],
+          ["AND", "Andorra", "アンドラ"],
+          ["LIE", "Liechtenstein", "リヒテンシュタイン"],
+          ["CZE", "Chéquia", "チェコ"],
+          ["SVK", "Eslováquia", "スロバキア"],
+          ["POL", "Polônia", "ポーランド"],
+          ["HUN", "Hungria", "ハンガリー"],
+          ["HRV", "Croácia", "クロアチア"],
+          ["SVN", "Eslovênia", "スロベニア"],
+          ["ROU", "Romênia", "ルーマニア"],
+          ["BGR", "Bulgária", "ブルガリア"],
+          ["SRB", "Sérvia", "セルビア"],
+          ["ALB", "Albânia", "アルバニア"],
+          ["BIH", "Bósnia e Herzegovina", "ボスニア・ヘルツェゴビナ"],
+          ["MNE", "Montenegro", "モンテネグロ"],
+          ["MKD", "Macedônia do Norte", "北マケドニア"],
+          ["CYP", "Chipre", "キプロス"],
+          ["DNK", "Dinamarca", "デンマーク"],
+          ["SWE", "Suécia", "スウェーデン"],
+          ["NOR", "Noruega", "ノルウェー"],
+          ["FIN", "Finlândia", "フィンランド"],
+          ["ISL", "Islândia", "アイスランド"],
+          ["EST", "Estônia", "エストニア"],
+          ["LVA", "Letônia", "ラトビア"],
+          ["LTU", "Lituânia", "リトアニア"],
+          ["UKR", "Ucrânia", "ウクライナ"],
+          ["RUS", "Rússia", "ロシア"],
+        ],
+        "América do Sul": [
+          ["BRA", "Brasil", "ブラジル"],
+          ["ARG", "Argentina", "アルゼンチン"],
+          ["CHL", "Chile", "チリ"],
+          ["PER", "Peru", "ペルー"],
+          ["URY", "Uruguai", "ウルグアイ"],
+          ["PRY", "Paraguai", "パラグアイ"],
+          ["BOL", "Bolívia", "ボリビア"],
+          ["COL", "Colômbia", "コロンビア"],
+          ["VEN", "Venezuela", "ベネズエラ"],
+          ["ECU", "Equador", "エクアドル"],
+          ["GUY", "Guiana", "ガイアナ"],
+          ["SUR", "Suriname", "スリナム"],
+        ],
+        "América do Norte": [
+          ["USA", "Estados Unidos", "アメリカ"],
+          ["CAN", "Canadá", "カナダ"],
+          ["MEX", "México", "メキシコ"],
+          ["CUB", "Cuba", "キューバ"],
+          ["JAM", "Jamaica", "ジャマイカ"],
+          ["DOM", "República Dominicana", "ドミニカ共和国"],
+          ["HTI", "Haiti", "ハイチ"],
+          ["BHS", "Bahamas", "バハマ"],
+          ["BRB", "Barbados", "バルバドス"],
+          ["TTO", "Trinidad e Tobago", "トリニダード・トバゴ"],
+          ["PAN", "Panamá", "パナマ"],
+          ["CRI", "Costa Rica", "コスタリカ"],
+          ["NIC", "Nicarágua", "ニカラグア"],
+          ["HND", "Honduras", "ホンジュラス"],
+          ["SLV", "El Salvador", "エルサルバドル"],
+          ["GTM", "Guatemala", "グアテマラ"],
+          ["BLZ", "Belize", "ベリーズ"],
+        ],
+        África: [
+          ["EGY", "Egito", "エジプト"],
+          ["MAR", "Marrocos", "モロッコ"],
+          ["TUN", "Tunísia", "チュニジア"],
+          ["DZA", "Argélia", "アルジェリア"],
+          ["LBY", "Líbia", "リビア"],
+          ["ZAF", "África do Sul", "南アフリカ"],
+          ["NAM", "Namíbia", "ナミビア"],
+          ["BWA", "Botsuana", "ボツワナ"],
+          ["ZWE", "Zimbábue", "ジンバブエ"],
+          ["ZMB", "Zâmbia", "ザンビア"],
+          ["MOZ", "Moçambique", "モザンビーク"],
+          ["AGO", "Angola", "アンゴラ"],
+          ["KEN", "Quênia", "ケニア"],
+          ["TZA", "Tanzânia", "タンザニア"],
+          ["UGA", "Uganda", "ウガンダ"],
+          ["RWA", "Ruanda", "ルワンダ"],
+          ["ETH", "Etiópia", "エチオピア"],
+          ["SDN", "Sudão", "スーダン"],
+          ["NGA", "Nigéria", "ナイジェリア"],
+          ["GHA", "Gana", "ガーナ"],
+          ["SEN", "Senegal", "セネガル"],
+          ["CIV", "Costa do Marfim", "コートジボワール"],
+          ["CMR", "Camarões", "カメルーン"],
+          ["COD", "República Democrática do Congo", "コンゴ民主共和国"],
+          ["CPV", "Cabo Verde", "カーボベルデ"],
+          ["MDG", "Madagascar", "マダガスカル"],
+          ["MUS", "Maurício", "モーリシャス"],
+          ["SYC", "Seicheles", "セーシェル"],
+        ],
+        Oceania: [
+          ["AUS", "Austrália", "オーストラリア"],
+          ["NZL", "Nova Zelândia", "ニュージーランド"],
+          ["FJI", "Fiji", "フィジー"],
+          ["PNG", "Papua-Nova Guiné", "パプアニューギニア"],
+          ["WSM", "Samoa", "サモア"],
+          ["TON", "Tonga", "トンガ"],
+          ["VUT", "Vanuatu", "バヌアツ"],
+          ["PLW", "Palau", "パラオ"],
+        ],
+      };
+
+      // Transforma o DADOS em uma lista única de países (cada um já com o seu continente)
+      var PAISES = [];
+      for (var continente in DADOS) {
+        for (var i = 0; i < DADOS[continente].length; i++) {
+          var p = DADOS[continente][i];
+          PAISES.push({
+            id: p[0],
+            nome: p[1],
+            jp: p[2],
+            continente: continente,
+          });
+        }
+      }
+
+      // Guarda só as escolhas do usuário. Exemplo:
+      // { BRA: { status: "visitado", nome: "Brasil", continente: "América do Sul" } }
+      var lugares = {};
+
+      // O que o usuário está filtrando agora
+      var filtroContinente = "Todos";
+      var textoBusca = "";
+
+      // ---------- 2) SALVAR E CARREGAR ----------
+      // Agora os dados vêm do banco, e não mais do localStorage
+      function carregar() {
+        return fetch("/lugares/" + sessionStorage.ID_USUARIO)
+          .then(function (resposta) {
+            return resposta.json();
+          })
+          .then(function (lista) {
+            lugares = {};
+            for (var i = 0; i < lista.length; i++) {
+              lugares[lista[i].codigo] = {
+                status: lista[i].status,
+                nome: lista[i].nome,
+                continente: lista[i].continente,
+              };
+            }
+          })
+          .catch(function (erro) {
+            console.log(erro);
+          });
+      }
+
+      function salvarNoBanco(id) {
+        fetch("/lugares/salvar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            idUsuario: sessionStorage.ID_USUARIO,
+            codigo: id,
+            status: lugares[id].status,
+          }),
+        }).catch(function (erro) {
+          console.log(erro);
+        });
+      }
+
+      function removerDoBanco(id) {
+        fetch("/lugares/" + sessionStorage.ID_USUARIO + "/" + id, {
+          method: "DELETE",
+        }).catch(function (erro) {
+          console.log(erro);
+        });
+      }
+
+      // ---------- 3) DESENHAR ----------
+      // Tira acentos e maiúsculas, para "japao" achar "Japão"
+      function simplificar(texto) {
+        return texto
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      }
+
+      function desenharFiltros() {
+        var nomes = ["Todos"];
+        for (var c in DADOS) {
+          nomes.push(c);
         }
 
-        var texto = "Inexplorado";
-        if (status == "visitado") texto = "Já visitei";
-        if (status == "desejo") texto = "Quero visitar";
+        var html = "";
+        for (var i = 0; i < nomes.length; i++) {
+          var classe = nomes[i] == filtroContinente ? "ativo" : "";
+          html += `<button type="button" class="${classe}" onclick="filtrar('${nomes[i]}')">${nomes[i]}</button>`;
+        }
+        document.getElementById("filtros").innerHTML = html;
+      }
 
-        // A classe do cartão é o próprio status: o CSS pinta cada um de uma cor
-        html += `
+      function desenhar() {
+        var html = "";
+        var mostrados = 0;
+
+        for (var i = 0; i < PAISES.length; i++) {
+          var pais = PAISES[i];
+
+          // Pula os países que não combinam com o filtro ou com a busca
+          if (
+            filtroContinente != "Todos" &&
+            pais.continente != filtroContinente
+          )
+            continue;
+          if (
+            textoBusca != "" &&
+            simplificar(pais.nome).indexOf(simplificar(textoBusca)) == -1
+          )
+            continue;
+
+          // Se o país não está em "lugares", ele é inexplorado
+          var status = "vazio";
+          if (lugares[pais.id]) {
+            status = lugares[pais.id].status;
+          }
+
+          var texto = "Inexplorado";
+          if (status == "visitado") texto = "Já visitei";
+          if (status == "desejo") texto = "Quero visitar";
+
+          // A classe do cartão é o próprio status: o CSS pinta cada um de uma cor
+          html += `
           <button type="button" class="pais ${status}" onclick="alternar(${i})">
             <h3>${pais.nome}</h3>
             <span class="jp">${pais.jp}</span>
             <small>${pais.continente}</small>
             <p>${texto}</p>
           </button>`;
-        mostrados++;
+          mostrados++;
+        }
+
+        if (mostrados == 0) {
+          html =
+            "<p class='vazio'>Nenhum país encontrado. Tente outro nome.</p>";
+        }
+        document.getElementById("grade_paises").innerHTML = html;
+
+        // Os contadores olham todos os lugares marcados, mesmo os que o filtro esconde
+        var qtdVisitados = 0;
+        var qtdDesejos = 0;
+        for (var id in lugares) {
+          if (lugares[id].status == "visitado") qtdVisitados++;
+          if (lugares[id].status == "desejo") qtdDesejos++;
+        }
+        document.getElementById("qtd_visitados").innerHTML = qtdVisitados;
+        document.getElementById("qtd_desejos").innerHTML = qtdDesejos;
       }
 
-      if (mostrados == 0) {
-        html = "<p class='vazio'>Nenhum país encontrado. Tente outro nome.</p>";
-      }
-      document.getElementById("grade_paises").innerHTML = html;
+      // ---------- 4) CLICAR ----------
+      // Cada clique avança o status: inexplorado -> visitado -> desejo -> inexplorado
+      function alternar(i) {
+        var pais = PAISES[i];
+        var atual = "vazio";
+        if (lugares[pais.id]) {
+          atual = lugares[pais.id].status;
+        }
 
-      // Os contadores olham todos os lugares marcados, mesmo os que o filtro esconde
-      var qtdVisitados = 0;
-      var qtdDesejos = 0;
-      for (var id in lugares) {
-        if (lugares[id].status == "visitado") qtdVisitados++;
-        if (lugares[id].status == "desejo") qtdDesejos++;
-      }
-      document.getElementById("qtd_visitados").innerHTML = qtdVisitados;
-      document.getElementById("qtd_desejos").innerHTML = qtdDesejos;
-    }
+        if (atual == "vazio") {
+          lugares[pais.id] = {
+            status: "visitado",
+            nome: pais.nome,
+            continente: pais.continente,
+          };
+          salvarNoBanco(pais.id);
+        } else if (atual == "visitado") {
+          lugares[pais.id].status = "desejo";
+          salvarNoBanco(pais.id);
+        } else {
+          delete lugares[pais.id];
+          removerDoBanco(pais.id);
+        }
 
-    // ---------- 4) CLICAR ----------
-    // Cada clique avança o status: inexplorado -> visitado -> desejo -> inexplorado
-    function alternar(i) {
-      var pais = PAISES[i];
-      var atual = "vazio";
-      if (lugares[pais.id]) {
-        atual = lugares[pais.id].status;
-      }
-
-      if (atual == "vazio") {
-        lugares[pais.id] = {
-          status: "visitado",
-          nome: pais.nome,
-          continente: pais.continente
-        };
-      } else if (atual == "visitado") {
-        lugares[pais.id].status = "desejo";
-      } else {
-        delete lugares[pais.id];
+        desenhar();
       }
 
-      salvar();
-      desenhar();
-    }
+      // Chamada quando o usuário clica em um botão de continente
+      function filtrar(continente) {
+        filtroContinente = continente;
+        desenharFiltros();
+        desenhar();
+      }
 
-    // Chamada quando o usuário clica em um botão de continente
-    function filtrar(continente) {
-      filtroContinente = continente;
-      desenharFiltros();
-      desenhar();
-    }
+      // Chamada a cada letra digitada na busca
+      function buscar(texto) {
+        textoBusca = texto;
+        desenhar();
+      }
 
-    // Chamada a cada letra digitada na busca
-    function buscar(texto) {
-      textoBusca = texto;
-      desenhar();
-    }
-
-    // ---------- 5) INICIAR ----------
-    function iniciarExplorar() {
-      carregar();
-      desenharFiltros();
-      desenhar();
-    }
-  </script>
-
-</body>
-
+      // ---------- 5) INICIAR ----------
+      function iniciarExplorar() {
+        carregar().then(function () {
+          desenharFiltros();
+          desenhar();
+        });
+      }
+    </script>
+  </body>
 </html>

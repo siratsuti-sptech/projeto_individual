@@ -1,374 +1,456 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>旅人 | Tabito | Dashboard</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png"
+      type="image/x-icon"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>旅人 | Tabito | Dashboard</title>
-  <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
+    <!-- CSS compartilhado (menu, painel, cores) -->
+    <link rel="stylesheet" href="./../css/dashboards.css" />
 
-  <!-- CSS compartilhado (menu, painel, cores) -->
-  <link rel="stylesheet" href="./../css/dashboards.css">
-
-  <!-- CSS só desta página -->
-  <style>
-    .dashboard {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 36px 20px 80px;
-    }
-
-    .dica {
-      margin: 0 0 18px;
-      color: var(--suave);
-    }
-
-    .dica a {
-      color: var(--lilas-claro);
-    }
-
-    /* ---------- números ---------- */
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .kpi {
-      padding: 18px;
-      text-align: center;
-      background: var(--roxo-escuro);
-      border: 1px solid rgba(183, 148, 244, 0.35);
-      border-radius: 8px;
-    }
-
-    .kpi b {
-      display: block;
-      font-family: 'Yuji Boku', cursive;
-      font-weight: 400;
-      font-size: 2.2rem;
-      color: var(--lilas-claro);
-    }
-
-    .kpi span {
-      color: var(--suave);
-      font-size: 0.95rem;
-    }
-
-    /* ---------- gráficos ---------- */
-    .graficos,
-    .listas {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-
-    /* O Chart.js precisa de uma caixa com altura definida para desenhar dentro dela */
-    .grafico-box {
-      position: relative;
-      height: 300px;
-    }
-
-    /* ---------- listas ---------- */
-    .listas ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .listas li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(183, 148, 244, 0.2);
-    }
-
-    .listas button {
-      padding: 0 10px;
-      font: inherit;
-      color: var(--lilas-claro);
-      cursor: pointer;
-      background: transparent;
-      border: 1px solid var(--lilas);
-      border-radius: 4px;
-    }
-
-    .listas button:hover {
-      color: #160a28;
-      background: var(--lilas);
-    }
-
-    .vazio {
-      margin: 0;
-      color: var(--suave);
-    }
-
-    @media (max-width: 760px) {
-      .kpis {
-        grid-template-columns: repeat(2, 1fr);
+    <!-- CSS só desta página -->
+    <style>
+      .dashboard {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 36px 20px 80px;
       }
 
+      .dica {
+        margin: 0 0 18px;
+        color: var(--suave);
+      }
+
+      .dica a {
+        color: var(--lilas-claro);
+      }
+
+      /* ---------- números ---------- */
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      .kpi {
+        padding: 18px;
+        text-align: center;
+        background: var(--roxo-escuro);
+        border: 1px solid rgba(183, 148, 244, 0.35);
+        border-radius: 8px;
+      }
+
+      .kpi b {
+        display: block;
+        font-family: "Yuji Boku", cursive;
+        font-weight: 400;
+        font-size: 2.2rem;
+        color: var(--lilas-claro);
+      }
+
+      .kpi span {
+        color: var(--suave);
+        font-size: 0.95rem;
+      }
+
+      /* ---------- gráficos ---------- */
       .graficos,
       .listas {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
       }
-    }
-  </style>
 
-  <script src="../js/sessao.js"></script>
+      /* O Chart.js precisa de uma caixa com altura definida para desenhar dentro dela */
+      .grafico-box {
+        position: relative;
+        height: 300px;
+      }
 
-  <!-- Chart.js: a biblioteca que desenha os gráficos -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-</head>
+      /* ---------- listas ---------- */
+      .listas ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
 
-<body onload="validarSessao(); montarDashboard()">
+      .listas li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(183, 148, 244, 0.2);
+      }
 
-  <header class="topo">
-    <a class="marca" href="../index.html">
-      <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito">
-      <span class="kanji">旅人</span>
-      <span class="sep"></span>
-      <span class="nome">Tabito</span>
-    </a>
+      .listas button {
+        padding: 0 10px;
+        font: inherit;
+        color: var(--lilas-claro);
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid var(--lilas);
+        border-radius: 4px;
+      }
 
-    <nav class="topo-nav">
-      <a href="./jornada.html">Minha Jornada</a>
-      <a class="atual" href="./dashboard.html">Dashboard</a>
-      <a href="./explorar.html">Explorar</a>
-      <a href="#" onclick="limparSessao(); return false;">Sair</a>
-    </nav>
-  </header>
+      .listas button:hover {
+        color: #160a28;
+        background: var(--lilas);
+      }
 
-  <main class="dashboard">
+      .vazio {
+        margin: 0;
+        color: var(--suave);
+      }
 
-    <section class="painel">
-      <p class="kicker"><span class="selo">旅</span>Olá, <span id="b_usuario">viajante</span>!</p>
-      <h2 class="titulo-secao">Minha jornada em números</h2>
+      @media (max-width: 760px) {
+        .kpis {
+          grid-template-columns: repeat(2, 1fr);
+        }
 
-      <p class="dica" id="aviso_vazio" style="display: none;">
-        Você ainda não marcou nenhum país. Comece pelo <a href="./explorar.html">Explorar</a>.
-      </p>
+        .graficos,
+        .listas {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
 
-      <div class="kpis">
-        <div class="kpi"><b id="kpi_visitados">0</b><span>países visitados</span></div>
-        <div class="kpi"><b id="kpi_desejos">0</b><span>na lista de desejos</span></div>
-        <div class="kpi"><b id="kpi_mundo">0%</b><span>do mundo</span></div>
-        <div class="kpi"><b id="kpi_continentes">0 de 6</b><span>continentes</span></div>
-      </div>
-    </section>
+    <script src="../js/sessao.js"></script>
 
-    <section class="graficos">
-      <div class="painel">
-        <h3 class="subtitulo">Visitados e lista de desejos</h3>
-        <div class="grafico-box">
-          <canvas id="grafico_status" aria-label="Rosca com a quantidade de países visitados e na lista de desejos"></canvas>
+    <!-- Chart.js: a biblioteca que desenha os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+
+  <body onload="validarSessao(); iniciarDashboard()">
+    <header class="topo">
+      <a class="marca" href="../index.html">
+        <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito" />
+        <span class="kanji">旅人</span>
+        <span class="sep"></span>
+        <span class="nome">Tabito</span>
+      </a>
+
+      <nav class="topo-nav">
+        <a href="./jornada.html">Minha Jornada</a>
+        <a class="atual" href="./dashboard.html">Dashboard</a>
+        <a href="./explorar.html">Explorar</a>
+        <a href="#" onclick="limparSessao(); return false;">Sair</a>
+      </nav>
+    </header>
+
+    <main class="dashboard">
+      <section class="painel">
+        <p class="kicker">
+          <span class="selo">旅</span>Olá, <span id="b_usuario">viajante</span>!
+        </p>
+        <h2 class="titulo-secao">Minha jornada em números</h2>
+
+        <p class="dica" id="aviso_vazio" style="display: none">
+          Você ainda não marcou nenhum país. Comece pelo
+          <a href="./explorar.html">Explorar</a>.
+        </p>
+
+        <div class="kpis">
+          <div class="kpi">
+            <b id="kpi_visitados">0</b><span>países visitados</span>
+          </div>
+          <div class="kpi">
+            <b id="kpi_desejos">0</b><span>na lista de desejos</span>
+          </div>
+          <div class="kpi"><b id="kpi_mundo">0%</b><span>do mundo</span></div>
+          <div class="kpi">
+            <b id="kpi_continentes">0 de 6</b><span>continentes</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="painel">
-        <h3 class="subtitulo">Países por continente</h3>
-        <div class="grafico-box">
-          <canvas id="grafico_continentes" aria-label="Barras com os países visitados e desejados em cada continente"></canvas>
+      <section class="graficos">
+        <div class="painel">
+          <h3 class="subtitulo">Visitados e lista de desejos</h3>
+          <div class="grafico-box">
+            <canvas
+              id="grafico_status"
+              aria-label="Rosca com a quantidade de países visitados e na lista de desejos"
+            ></canvas>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <section class="listas">
-      <div class="painel">
-        <h3 class="subtitulo">Visitados</h3>
-        <ul id="lista_visitados"></ul>
-      </div>
+        <div class="painel">
+          <h3 class="subtitulo">Países por continente</h3>
+          <div class="grafico-box">
+            <canvas
+              id="grafico_continentes"
+              aria-label="Barras com os países visitados e desejados em cada continente"
+            ></canvas>
+          </div>
+        </div>
+      </section>
 
-      <div class="painel">
-        <h3 class="subtitulo">Quero visitar</h3>
-        <ul id="lista_desejos"></ul>
-      </div>
-    </section>
+      <section class="listas">
+        <div class="painel">
+          <h3 class="subtitulo">Visitados</h3>
+          <ul id="lista_visitados"></ul>
+        </div>
 
-  </main>
+        <div class="painel">
+          <h3 class="subtitulo">Quero visitar</h3>
+          <ul id="lista_desejos"></ul>
+        </div>
+      </section>
+    </main>
 
-  <script>
-    // ============================================================
-    // Dashboard: lê o que o usuário marcou no Explorar e mostra em números e gráficos.
-    // Fluxo: carregar() -> contar -> mostrar números -> criar gráficos -> listas
-    // ============================================================
+    <script>
+      // ============================================================
+      // Dashboard: lê o que o usuário marcou no Explorar e mostra em números e gráficos.
+      // Fluxo: carregar() -> contar -> mostrar números -> criar gráficos -> listas
+      // ============================================================
 
-    var TOTAL_PAISES = 195;   // base para calcular o % do mundo
-    var CONTINENTES = ["África", "América do Norte", "América do Sul", "Ásia", "Europa", "Oceania"];
+      var TOTAL_PAISES = 195; // base para calcular o % do mundo
+      var CONTINENTES = [
+        "África",
+        "América do Norte",
+        "América do Sul",
+        "Ásia",
+        "Europa",
+        "Oceania",
+      ];
 
-    // A MESMA chave que o Explorar usa para salvar
-    var CHAVE = "tabito_lugares_" + sessionStorage.ID_USUARIO;
+      var lugares = {}; // { BRA: { status, nome, continente }, ... }
+      var graficoStatus; // guardamos os gráficos para poder destruir antes de refazer
+      var graficoContinentes;
 
-    var lugares = {};            // { BRA: { status, nome, continente }, ... }
-    var graficoStatus;           // guardamos os gráficos para poder destruir antes de refazer
-    var graficoContinentes;
-
-    // ---------- 1) LER E SALVAR OS DADOS ----------
-    function carregar() {
-      var texto = localStorage.getItem(CHAVE);
-      lugares = texto ? JSON.parse(texto) : {};
-    }
-
-    function salvar() {
-      localStorage.setItem(CHAVE, JSON.stringify(lugares));
-    }
-
-    // ---------- 2) MONTAR A PÁGINA ----------
-    function montarDashboard() {
-      carregar();
-
-      // ----- CONTAR -----
-      var visitados = 0;
-      var desejos = 0;
-      var visitadosPorContinente = {};
-      var desejosPorContinente = {};
-
-      // começa todos os continentes com zero
-      for (var i = 0; i < CONTINENTES.length; i++) {
-        visitadosPorContinente[CONTINENTES[i]] = 0;
-        desejosPorContinente[CONTINENTES[i]] = 0;
+      // ---------- 2) SALVAR E CARREGAR ----------
+      // Agora os dados vêm do banco, e não mais do localStorage
+      function carregar() {
+        return fetch("/lugares/" + sessionStorage.ID_USUARIO)
+          .then(function (resposta) {
+            return resposta.json();
+          })
+          .then(function (lista) {
+            lugares = {};
+            for (var i = 0; i < lista.length; i++) {
+              lugares[lista[i].codigo] = {
+                status: lista[i].status,
+                nome: lista[i].nome,
+                continente: lista[i].continente,
+              };
+            }
+          })
+          .catch(function (erro) {
+            console.log(erro);
+          });
       }
 
-      // percorre tudo o que o usuário marcou
-      for (var id in lugares) {
-        var lugar = lugares[id];
+      function salvarNoBanco(id) {
+        fetch("/lugares/salvar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            idUsuario: sessionStorage.ID_USUARIO,
+            codigo: id,
+            status: lugares[id].status,
+          }),
+        }).catch(function (erro) {
+          console.log(erro);
+        });
+      }
 
-        if (lugar.status == "visitado") {
-          visitados++;
-          if (visitadosPorContinente[lugar.continente] != undefined) {
-            visitadosPorContinente[lugar.continente]++;
-          }
-        } else if (lugar.status == "desejo") {
-          desejos++;
-          if (desejosPorContinente[lugar.continente] != undefined) {
-            desejosPorContinente[lugar.continente]++;
-          }
+      function removerDoBanco(id) {
+        fetch("/lugares/" + sessionStorage.ID_USUARIO + "/" + id, {
+          method: "DELETE",
+        }).catch(function (erro) {
+          console.log(erro);
+        });
+      }
+
+      // ---------- 2) MONTAR A PÁGINA ----------
+      function iniciarDashboard() {
+        carregar().then(montarDashboard);
+      }
+
+      function montarDashboard() {
+        // ----- CONTAR -----
+        var visitados = 0;
+        var desejos = 0;
+        var visitadosPorContinente = {};
+        var desejosPorContinente = {};
+
+        // começa todos os continentes com zero
+        for (var i = 0; i < CONTINENTES.length; i++) {
+          visitadosPorContinente[CONTINENTES[i]] = 0;
+          desejosPorContinente[CONTINENTES[i]] = 0;
         }
-      }
 
-      // quantos continentes têm pelo menos 1 país visitado
-      var continentesVisitados = 0;
-      for (var i = 0; i < CONTINENTES.length; i++) {
-        if (visitadosPorContinente[CONTINENTES[i]] > 0) {
-          continentesVisitados++;
-        }
-      }
+        // percorre tudo o que o usuário marcou
+        for (var id in lugares) {
+          var lugar = lugares[id];
 
-      // ----- MOSTRAR OS NÚMEROS -----
-      document.getElementById("kpi_visitados").innerHTML = visitados;
-      document.getElementById("kpi_desejos").innerHTML = desejos;
-      document.getElementById("kpi_mundo").innerHTML = Math.round(visitados / TOTAL_PAISES * 100) + "%";
-      document.getElementById("kpi_continentes").innerHTML = continentesVisitados + " de 6";
-
-      // se não tem nada marcado, mostra o aviso
-      var vazio = (visitados + desejos) == 0;
-      document.getElementById("aviso_vazio").style.display = vazio ? "block" : "none";
-
-      // ----- GRÁFICOS -----
-      // Os gráficos usam a cor e a fonte do site
-      Chart.defaults.color = "#d9c4fa";
-      Chart.defaults.font.family = "'Klee One', cursive";
-
-      // Se já existe um gráfico nesse canvas, destrói antes de criar outro.
-      // Sem isso, ao atualizar a página (ou remover um país) o Chart.js dá erro.
-      if (graficoStatus) graficoStatus.destroy();
-      if (graficoContinentes) graficoContinentes.destroy();
-
-      // Gráfico 1: ROSCA (doughnut) com dois pedaços
-      graficoStatus = new Chart(document.getElementById("grafico_status"), {
-        type: "doughnut",
-        data: {
-          labels: ["Visitados", "Quero visitar"],
-          datasets: [{
-            data: [visitados, desejos],
-            backgroundColor: ["#c4a7ff", "#d46ac6"],
-            borderColor: "#160a28"
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          cutout: "60%",
-          plugins: { legend: { position: "bottom" } }
-        }
-      });
-
-      // Gráfico 2: BARRAS EMPILHADAS, uma barra por continente e dois "datasets"
-      // (visitados e desejos). Cada dataset precisa de uma lista com um valor por label.
-      var dadosVisitados = [];
-      var dadosDesejos = [];
-      for (var i = 0; i < CONTINENTES.length; i++) {
-        dadosVisitados.push(visitadosPorContinente[CONTINENTES[i]]);
-        dadosDesejos.push(desejosPorContinente[CONTINENTES[i]]);
-      }
-
-      graficoContinentes = new Chart(document.getElementById("grafico_continentes"), {
-        type: "bar",
-        data: {
-          labels: CONTINENTES,
-          datasets: [
-            { label: "Visitados", data: dadosVisitados, backgroundColor: "#c4a7ff" },
-            { label: "Quero visitar", data: dadosDesejos, backgroundColor: "#d46ac6" }
-          ]
-        },
-        options: {
-          maintainAspectRatio: false,
-          plugins: { legend: { position: "bottom" } },
-          scales: {
-            x: { stacked: true, grid: { display: false } },
-            y: {
-              stacked: true,
-              beginAtZero: true,
-              ticks: { precision: 0 },          // só números inteiros
-              grid: { color: "rgba(183, 148, 244, 0.15)" }
+          if (lugar.status == "visitado") {
+            visitados++;
+            if (visitadosPorContinente[lugar.continente] != undefined) {
+              visitadosPorContinente[lugar.continente]++;
+            }
+          } else if (lugar.status == "desejo") {
+            desejos++;
+            if (desejosPorContinente[lugar.continente] != undefined) {
+              desejosPorContinente[lugar.continente]++;
             }
           }
         }
-      });
 
-      // ----- LISTAS -----
-      montarLista("visitado", "lista_visitados", "Nenhum país visitado ainda.");
-      montarLista("desejo", "lista_desejos", "Sua lista de desejos está vazia.");
-    }
-
-    // Monta uma lista (visitados ou desejos) em ordem alfabética
-    function montarLista(status, idLista, textoVazio) {
-      var ids = [];
-      for (var id in lugares) {
-        if (lugares[id].status == status) {
-          ids.push(id);
+        // quantos continentes têm pelo menos 1 país visitado
+        var continentesVisitados = 0;
+        for (var i = 0; i < CONTINENTES.length; i++) {
+          if (visitadosPorContinente[CONTINENTES[i]] > 0) {
+            continentesVisitados++;
+          }
         }
+
+        // ----- MOSTRAR OS NÚMEROS -----
+        document.getElementById("kpi_visitados").innerHTML = visitados;
+        document.getElementById("kpi_desejos").innerHTML = desejos;
+        document.getElementById("kpi_mundo").innerHTML =
+          Math.round((visitados / TOTAL_PAISES) * 100) + "%";
+        document.getElementById("kpi_continentes").innerHTML =
+          continentesVisitados + " de 6";
+
+        // se não tem nada marcado, mostra o aviso
+        var vazio = visitados + desejos == 0;
+        document.getElementById("aviso_vazio").style.display = vazio
+          ? "block"
+          : "none";
+
+        // ----- GRÁFICOS -----
+        // Os gráficos usam a cor e a fonte do site
+        Chart.defaults.color = "#d9c4fa";
+        Chart.defaults.font.family = "'Klee One', cursive";
+
+        // Se já existe um gráfico nesse canvas, destrói antes de criar outro.
+        // Sem isso, ao atualizar a página (ou remover um país) o Chart.js dá erro.
+        if (graficoStatus) graficoStatus.destroy();
+        if (graficoContinentes) graficoContinentes.destroy();
+
+        // Gráfico 1: ROSCA (doughnut) com dois pedaços
+        graficoStatus = new Chart(document.getElementById("grafico_status"), {
+          type: "doughnut",
+          data: {
+            labels: ["Visitados", "Quero visitar"],
+            datasets: [
+              {
+                data: [visitados, desejos],
+                backgroundColor: ["#c4a7ff", "#d46ac6"],
+                borderColor: "#160a28",
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            cutout: "60%",
+            plugins: { legend: { position: "bottom" } },
+          },
+        });
+
+        // Gráfico 2: BARRAS EMPILHADAS, uma barra por continente e dois "datasets"
+        // (visitados e desejos). Cada dataset precisa de uma lista com um valor por label.
+        var dadosVisitados = [];
+        var dadosDesejos = [];
+        for (var i = 0; i < CONTINENTES.length; i++) {
+          dadosVisitados.push(visitadosPorContinente[CONTINENTES[i]]);
+          dadosDesejos.push(desejosPorContinente[CONTINENTES[i]]);
+        }
+
+        graficoContinentes = new Chart(
+          document.getElementById("grafico_continentes"),
+          {
+            type: "bar",
+            data: {
+              labels: CONTINENTES,
+              datasets: [
+                {
+                  label: "Visitados",
+                  data: dadosVisitados,
+                  backgroundColor: "#c4a7ff",
+                },
+                {
+                  label: "Quero visitar",
+                  data: dadosDesejos,
+                  backgroundColor: "#d46ac6",
+                },
+              ],
+            },
+            options: {
+              maintainAspectRatio: false,
+              plugins: { legend: { position: "bottom" } },
+              scales: {
+                x: { stacked: true, grid: { display: false } },
+                y: {
+                  stacked: true,
+                  beginAtZero: true,
+                  ticks: { precision: 0 }, // só números inteiros
+                  grid: { color: "rgba(183, 148, 244, 0.15)" },
+                },
+              },
+            },
+          }
+        );
+
+        // ----- LISTAS -----
+        montarLista(
+          "visitado",
+          "lista_visitados",
+          "Nenhum país visitado ainda."
+        );
+        montarLista(
+          "desejo",
+          "lista_desejos",
+          "Sua lista de desejos está vazia."
+        );
       }
 
-      ids.sort(function (a, b) {
-        return lugares[a].nome.localeCompare(lugares[b].nome);
-      });
+      // Monta uma lista (visitados ou desejos) em ordem alfabética
+      function montarLista(status, idLista, textoVazio) {
+        var ids = [];
+        for (var id in lugares) {
+          if (lugares[id].status == status) {
+            ids.push(id);
+          }
+        }
 
-      var html = "";
-      for (var i = 0; i < ids.length; i++) {
-        var lugar = lugares[ids[i]];
-        html += `
+        ids.sort(function (a, b) {
+          return lugares[a].nome.localeCompare(lugares[b].nome);
+        });
+
+        var html = "";
+        for (var i = 0; i < ids.length; i++) {
+          var lugar = lugares[ids[i]];
+          html += `
           <li>
             <span>${lugar.nome}</span>
             <button type="button" aria-label="Remover ${lugar.nome}" onclick="remover('${ids[i]}')">×</button>
           </li>`;
+        }
+
+        if (html == "") {
+          html = "<li><p class='vazio'>" + textoVazio + "</p></li>";
+        }
+        document.getElementById(idLista).innerHTML = html;
       }
 
-      if (html == "") {
-        html = "<li><p class='vazio'>" + textoVazio + "</p></li>";
+      // ---------- 3) REMOVER UM PAÍS ----------
+      function remover(id) {
+        delete lugares[id];
+        fetch("/lugares/" + sessionStorage.ID_USUARIO + "/" + id, {
+          method: "DELETE",
+        }).catch(function (erro) {
+          console.log(erro);
+        });
+        montarDashboard();
       }
-      document.getElementById(idLista).innerHTML = html;
-    }
-
-    // ---------- 3) REMOVER UM PAÍS ----------
-    function remover(id) {
-      delete lugares[id];
-      salvar();
-      montarDashboard();   // refaz números, gráficos e listas com os dados novos
-    }
-  </script>
-
-</body>
-
+    </script>
+  </body>
 </html>
