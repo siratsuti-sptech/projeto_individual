@@ -6,40 +6,44 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
+CREATE DATABASE tabito;
 
-USE aquatech;
+USE tabito;
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+CREATE TABLE usuario(
+idTabito INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45),
+email VARCHAR(45),
+senha VARCHAR(45) NOT NULL,
+dtCadastrado DATETIME DEFAULT CURRENT_TIMESTAMP 
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE continente (
+idContinente INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL UNIQUE
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE pais (
+idPais INT PRIMARY KEY AUTO_INCREMENT,
+codigo CHAR(3) NOT NULL UNIQUE,
+nome VARCHAR(45),
+nome_jp VARCHAR(45),
+fkContinente INT,
+CONSTRAINT fkContinentePais FOREIGN KEY (fkContinente)
+REFERENCES continente (idContinente)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE lugar (
+idLugar INT AUTO_INCREMENT,
+fkUsuario INT,
+CONSTRAINT fkUsuarioLugar FOREIGN KEY (fkUsuario)
+REFERENCES usuario (idTabito) ON DELETE CASCADE,
+fkPais INT,
+CONSTRAINT fkPaisLugar FOREIGN KEY (fkPais)
+REFERENCES pais (idPais),
+statuss VARCHAR(10),
+CONSTRAINT chkStatus CHECK(statuss IN('visitado', 'desejo')),
+CONSTRAINT pkComposta PRIMARY KEY (idLugar, fkUsuario, fkPais)
 );
 
 /* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */

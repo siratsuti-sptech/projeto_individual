@@ -21,7 +21,7 @@
 
     <div class="header">
         <div class="container">
-            <a href="index.html" class="marca">
+            <a href="index.html" class="marca"> 
                 <img src="assets/imgs/logo-emblema.png" alt="Logo do Tabito">
             <h1 class="titulo">旅人 | Tabito</h1>
             <ul class="navbar">
@@ -89,8 +89,6 @@
 
 <script>
 
-var MODO_SEM_BANCO = true;
-
 function entrar() {
     aguardar();
 
@@ -102,17 +100,6 @@ function entrar() {
         mensagem_erro.innerHTML = "Preencha o e-mail e a senha.";
         setTimeout(sumirMensagem, 5000);
         finalizarAguardar();
-        return false;
-    }
-
-    if (MODO_SEM_BANCO) {
-        sessionStorage.EMAIL_USUARIO = emailVar;
-        sessionStorage.NOME_USUARIO = "Viajante";
-        sessionStorage.ID_USUARIO = 1;
-
-        setTimeout(function () {
-            window.location = "./dashboard/jornada.html";
-        }, 1000);
         return false;
     }
 
