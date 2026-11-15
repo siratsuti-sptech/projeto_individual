@@ -85,7 +85,7 @@ Alguns dos lugares que já visitei e que inspiraram o Tabito.
       <sub><b>Lugar 1</b><br>Japão</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/inglaterra.JPG" alt="Lugar 2" width="100%"><br>
+      <img src="docs/inglaterra.jpg" alt="Lugar 2" width="100%"><br>
       <sub><b>Lugar 2</b><br>Inglaterra</sub>
     </td>
     <td align="center" width="33%">
@@ -99,11 +99,11 @@ Alguns dos lugares que já visitei e que inspiraram o Tabito.
       <sub><b>Lugar 4</b><br>Itália</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/vaticano.JPG" alt="Lugar 5" width="100%"><br>
+      <img src="docs/vaticano.jpg" alt="Lugar 5" width="100%"><br>
       <sub><b>Lugar 5</b><br>Vaticano</sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/franca.JPG" alt="Lugar 6" width="100%"><br>
+      <img src="docs/franca.jpg" alt="Lugar 6" width="100%"><br>
       <sub><b>Lugar 6</b><br>França</sub>
     </td>
   </tr>
