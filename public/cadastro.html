@@ -68,6 +68,9 @@
           <div class="campo">
             <span>Senha:</span>
             <input id="senha_input" type="password" placeholder="******" />
+            <small class="dica-senha">
+              Mínimo de 8 caracteres, com letra maiúscula, letra minúscula e caractere especial (como @ ! # $).
+            </small>
           </div>
           <div class="campo">
             <span>Confirmação da Senha:</span>
@@ -119,6 +122,30 @@
     mostrarMensagem("A senha precisa ter pelo menos 8 caracteres.");
     return false;
   }
+
+ let temMaiusculo = false
+ let temMinusculo = false
+ let temEspecial = false
+
+ for(let i = 0; i < senhaVar.length; i++){
+  let letra = senhaVar[i]
+
+  if(letra >= "0" && letra <= "9"){
+
+  }else if(letra != letra.toLowerCase()){
+    temMaiusculo = true
+  }else if(letra != letra.toUpperCase()){
+    temMinusculo = true
+  }else if(letra != ""){
+    temEspecial = true
+  }
+ }
+
+  if(!temMaiusculo || !temMinusculo || temEspecial){
+    mostrarMensagem("A senha precisa ter uma letra maiúscula, uma minúscula e um caractere especial (como @ ! # $).");
+    return false;
+  }
+
   if (senhaVar != confirmacaoSenhaVar) {
     mostrarMensagem("A confirmação não confere com a senha.");
     return false;
