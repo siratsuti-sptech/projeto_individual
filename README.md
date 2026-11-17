@@ -116,20 +116,20 @@ Alguns dos lugares que já visitei e que inspiraram o Tabito.
 **Essenciais**
 
 - [x] Página inicial com a identidade visual do Tabito
-- [ ] Cadastro e login conectados à API e ao banco de dados (em teste)
+- [x] Cadastro e login conectados à API e ao banco de dados (em teste)
 - [x] Controle de sessão: as páginas internas exigem login
 - [x] Página Minha Jornada, com capítulos do Japão e galerias de lugares
 - [x] Página Explorar, com 138 países, busca por nome e filtro por continente
 - [x] Dashboard com números, gráficos (Chart.js) e listas
-- [ ] Salvar as marcações do Explorar no banco de dados (hoje ficam no navegador)
+- [x] Salvar as marcações do Explorar no banco de dados (hoje ficam no navegador)
 
 **Ideias futuras**
 
-- [ ] Guardar as senhas com hash (bcrypt)
-- [ ] Visitantes publicarem as próprias experiências
-- [ ] Envio de fotos
-- [ ] Curtidas e comentários
-- [ ] Mapa interativo com os lugares visitados
+- [x] Guardar as senhas com hash (bcrypt)
+- [x] Visitantes publicarem as próprias experiências
+- [x] Envio de fotos
+- [x] Curtidas e comentários
+- [x] Mapa interativo com os lugares visitados
 
 ---
 
