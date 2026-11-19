@@ -220,28 +220,112 @@ body::before {
   color: var(--suave);
 }
 
-/* ---------- Galeria ---------- */
 
-.galeria {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 22px;
+/* ===== Lugares + Carrossel ===== */
+.lugar {
+  max-width: 820px;
+  margin: 48px auto;
+  padding: 28px;
+  background: var(--roxo-escuro);
+  border: 1px solid rgba(183, 148, 244, 0.45);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
-.card-lugar {
+.lugar-cabecalho {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(183, 148, 244, 0.35);
+}
+
+.lugar-cabecalho h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 8px;
+  font-family: 'Yuji Boku', cursive;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #ffffff;
+}
+
+.lugar-cabecalho .jp {
+  font-size: 0.6em;
+  letter-spacing: 0.1em;
+  color: var(--lilas);
+}
+
+.lugar-cabecalho p {
+  margin: 0;
+  color: var(--suave);
+}
+
+.carrossel {
   position: relative;
   overflow: hidden;
-  background: var(--roxo-escuro);
-  border: 1px solid rgba(183, 148, 244, 0.35);
+  border: 3px solid var(--lilas);
   border-radius: 8px;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  background: var(--fundo);
 }
 
-.card-lugar:hover {
-  transform: translateY(-4px);
-  border-color: var(--lilas);
-  box-shadow: 0 10px 24px rgba(90, 34, 176, 0.45);
+/* moldura fina por dentro, no mesmo estilo do .painel */
+.carrossel::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 2;
 }
+
+.carrossel .slides {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+
+.carrossel .slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+/* fundo: a mesma foto, desfocada */
+.carrossel .slide::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background-image: var(--foto);
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) brightness(0.6);
+}
+
+/* foto inteira, sem cortar nem distorcer */
+.carrossel .slide img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carrossel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.carrossel .prev { left: 14px; }
+.carrossel .next { right: 14px; }
 
 /* Número no estilo da legenda do mapa */
 .numero {

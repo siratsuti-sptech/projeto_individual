@@ -1,207 +1,556 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <link rel="shortcut icon" href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link
+      rel="shortcut icon"
+      href="../assets/icon/Emblema Tabito_ Jornada Japonesa.png"
+      type="image/x-icon"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>旅人 | Tabito | Minha Jornada</title>
 
     <link rel="stylesheet" href="./../css/dashboards.css" />
     <script src="../js/sessao.js"></script>
-</head>
+  </head>
 
-<body onload="validarSessao(); iniciarPagina()">
-
+  <body onload="validarSessao(); iniciarPagina()">
     <header class="topo">
-        <a class="marca" href="../index.html">
-            <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito">
-            <span class="kanji">旅人</span>
-            <span class="sep"></span>
-            <span class="nome">Tabito</span>
-        </a>
+      <a class="marca" href="../index.html">
+        <img src="../assets/icon/logo-emblema.png" alt="Emblema do Tabito" />
+        <span class="kanji">旅人</span>
+        <span class="sep"></span>
+        <span class="nome">Tabito</span>
+      </a>
 
-        <nav class="topo-nav">
-            <a class="atual" href="./jornada.html">Minha Jornada</a>
-            <a href="./dashboard.html">Dashboard</a>
-            <a href="./explorar.html">Explorar</a>
-            <a href="#" onclick="limparSessao(); return false;">Sair</a>
-        </nav>
+      <nav class="topo-nav">
+        <a class="atual" href="./jornada.html">Minha Jornada</a>
+        <a href="./dashboard.html">Dashboard</a>
+        <a href="./explorar.html">Explorar</a>
+        <a href="#" onclick="limparSessao(); return false;">Sair</a>
+      </nav>
     </header>
 
     <main class="jornada">
+      <section class="painel" id="japao">
+        <p class="kicker"><span class="selo">旅</span>第一章 · Japão</p>
+        <h2 class="titulo-secao">Minha vida no Japão</h2>
 
-        <section class="painel" id="japao">
-            <p class="kicker"><span class="selo">旅</span>第一章 · Japão</p>
-            <h2 class="titulo-secao">Minha vida no Japão</h2>
-          
-            <div class="capitulos">
-              <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/chegada.jpg" alt="Chegada ao Japão"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">2019</span>
-                  <h3>A chegada</h3>
-                  <p>Aos 13 anos voltei ao país onde nasci, agora com autonomia suficiente para entender e com uma oportunidade de conhecer mais da cultura e do lugar de onde eu vim. Começando a fase de adaptação.</p>
-                </div>
-              </article>
-          
-              <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/escolaa.jpg" alt="Escola no Japão"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Escola e idioma</span>
-                  <h3>Aprendendo japonês</h3>
-                  <p>A barreira da língua foi o primeiro desafio, principalmente pelo japonês ser um idioma totalmente diferente do nosso. Porém aos poucos fui entendendo que o único jeito de aprender é errando, ou seja me expondo e encarando a vergonha e o medo de errar. Isso me ajudou a perder a timidez e a me comunicar melhor com as pessoas, pelo fato da necessidade que eu tinha de aprender o idioma através das pessoas.</p>
-                </div>
-              </article>
-          
-              <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/cultura.jpg" alt="Amigos"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Pessoas</span>
-                  <h3>Amizades e cultura</h3>
-                  <p>Fazer amizades está muito ligado à cultura. Uma coisa que o Japão me ensinou é que para se fazer amizades não depende exclusivamente do idioma mas também da cultura. Porque por mais que eu estivesse aprendendo o japonês, eu não tinha todo o repertório cultural de um nativo e isso foi uma grande barreira, principalmente no início. Mas conforme o meu desenvolvimento, fui aprendendo a me conectar melhor com as pessoas, entendendo que não era sobre eu tentar ser um nativo, porque eu não sou. Mas mostrar a minha cultura, quem realmente sou e não tentar ser alguém quem eu não sou. E isso foi me ajudando a ter uma troca cultural não só com os japoneses mas com pessoas de outros países. </p>
-                </div>
-              </article>
-            
-
-            <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/primeiro.jpg" alt="primeiro-emprego"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Trabalho</span>
-                  <h3>Meu primeiro emprego</h3>
-                  <p>Minha primeira experiência de trabalho foi aos 16 anos em um restaurante na parte de cozinha. Foi muito importante porque me ensinou a dar valor ao dinheiro, criou em mim responsabilidade e comecei a conquistar minhas coisas com meu próprio esforço. E uma frase que o meu primeiro chefe me falou e me marcou foi: "お金を稼ぎ始める時からはもう子供じゃないよ、大人だよ！" = "A partir do momento que você começa a ganhar dinheiro você deixa de ser criança e se torna um adulto." </p> 
-                </div>
-              </article>
+        <div class="capitulos">
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/chegada.jpg" alt="Chegada ao Japão" />
             </div>
-            
-
-            <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/formandoo.jpg" alt="Formatura"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Fim de uma fase, início de outra</span>
-                  <h3>Me formando</h3>
-                  <p>Esse momento da minha vida foi muito especial para mim, porque olhar para trás e lembrar toda a trajetória que eu percorri, momentos no qual pensei em desistir, todos os desafios que eu tive que superar para chegar até onde eu queria foi muito gratificante. Porém o que deixa ainda mais marcante para mim não foi os desafios que eu tive ou as pessoas que disseram que eu não iria conseguir. Na verdade foram as pessoas que me ajudaram nessa jornada, desde os professores, amigos que eu fiz e principalmente a minha família, meu pai que sempre me apoiou nas minhas decisões, nunca me desanimou e sim sempre incentivou a nunca desistir. </p>
-                </div>
-              </article>
+            <div class="capitulo-texto">
+              <span class="ano">2019</span>
+              <h3>A chegada</h3>
+              <p>
+                Aos 13 anos voltei ao país onde nasci, agora com autonomia
+                suficiente para entender e com uma oportunidade de conhecer mais
+                da cultura e do lugar de onde eu vim. Começando a fase de
+                adaptação.
+              </p>
             </div>
-            
+          </article>
 
-            <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/emprego.jpg" alt="Trabalhando"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Pós ensino médio</span>
-                  <h3>A rotina de trabalho</h3>
-                  <p>Por mais que eu já tenha trabalhado, pela primeira vez estava em um emprego de período integral, nesse momento que conheci o outro lado do Japão. Além de ser um trabalho de dois turnos exigia bastante disposição física, gerando bastante desgaste e cansaço. Então comecei a cair na rotina e perceber que por mais que me gerasse uma certa estabilidade financeira, não agregava no meu desenvolvimento intelectual, porque pelo trabalho ser em fábrica é um serviço repetitivo, não necessitando pensar.</p>
-                </div>
-              </article>
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/escolaa.jpg" alt="Escola no Japão" />
             </div>
-
-            <article class="capitulo revelar">
-                <div class="capitulo-foto"><img src="../assets/imgs/voltar.jpg" alt="Voltando"></div>
-                <div class="capitulo-texto">
-                  <span class="ano">Em busca pelo conhecimento</span>
-                  <h3>A ideia de voltar... Brasil</h3>
-                  <p>Minha primeira ideia foi começar a fazer faculdade EAD Brasileira, porque as faculdades do Japão são extremamente caras. Após quase 2 semestres percebi que estava mais aprendendo por fora da faculdade do que pela metodologia da própria. Foi então que surgiu a ideia de voltar para o Brasil apenas para visitar e tentar fazer algum vestibular, caso desse certo ficar no Brasil. Então após 7 anos direto morando fora, voltei para o Brasil com um propósito.</p>
-                </div>
-              </article>
+            <div class="capitulo-texto">
+              <span class="ano">Escola e idioma</span>
+              <h3>Aprendendo japonês</h3>
+              <p>
+                A barreira da língua foi o primeiro desafio, principalmente pelo
+                japonês ser um idioma totalmente diferente do nosso. Porém aos
+                poucos fui entendendo que o único jeito de aprender é errando,
+                ou seja me expondo e encarando a vergonha e o medo de errar.
+                Isso me ajudou a perder a timidez e a me comunicar melhor com as
+                pessoas, pelo fato da necessidade que eu tinha de aprender o
+                idioma através das pessoas.
+              </p>
             </div>
+          </article>
 
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/cultura.jpg" alt="Amigos" />
+            </div>
+            <div class="capitulo-texto">
+              <span class="ano">Pessoas</span>
+              <h3>Amizades e cultura</h3>
+              <p>
+                Fazer amizades está muito ligado à cultura. Uma coisa que o
+                Japão me ensinou é que para se fazer amizades não depende
+                exclusivamente do idioma mas também da cultura. Porque por mais
+                que eu estivesse aprendendo o japonês, eu não tinha todo o
+                repertório cultural de um nativo e isso foi uma grande barreira,
+                principalmente no início. Mas conforme o meu desenvolvimento,
+                fui aprendendo a me conectar melhor com as pessoas, entendendo
+                que não era sobre eu tentar ser um nativo, porque eu não sou.
+                Mas mostrar a minha cultura, quem realmente sou e não tentar ser
+                alguém quem eu não sou. E isso foi me ajudando a ter uma troca
+                cultural não só com os japoneses mas com pessoas de outros
+                países.
+              </p>
+            </div>
+          </article>
+
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/primeiro.jpg" alt="primeiro-emprego" />
+            </div>
+            <div class="capitulo-texto">
+              <span class="ano">Trabalho</span>
+              <h3>Meu primeiro emprego</h3>
+              <p>
+                Minha primeira experiência de trabalho foi aos 16 anos em um
+                restaurante na parte de cozinha. Foi muito importante porque me
+                ensinou a dar valor ao dinheiro, criou em mim responsabilidade e
+                comecei a conquistar minhas coisas com meu próprio esforço. E
+                uma frase que o meu primeiro chefe me falou e me marcou foi:
+                "お金を稼ぎ始める時からはもう子供じゃないよ、大人だよ！" = "A
+                partir do momento que você começa a ganhar dinheiro você deixa
+                de ser criança e se torna um adulto."
+              </p>
+            </div>
+          </article>
+
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/formandoo.jpg" alt="Formatura" />
+            </div>
+            <div class="capitulo-texto">
+              <span class="ano">Fim de uma fase, início de outra</span>
+              <h3>Me formando</h3>
+              <p>
+                Esse momento da minha vida foi muito especial para mim, porque
+                olhar para trás e lembrar toda a trajetória que eu percorri,
+                momentos no qual pensei em desistir, todos os desafios que eu
+                tive que superar para chegar até onde eu queria foi muito
+                gratificante. Porém o que deixa ainda mais marcante para mim não
+                foi os desafios que eu tive ou as pessoas que disseram que eu
+                não iria conseguir. Na verdade foram as pessoas que me ajudaram
+                nessa jornada, desde os professores, amigos que eu fiz e
+                principalmente a minha família, meu pai que sempre me apoiou nas
+                minhas decisões, nunca me desanimou e sim sempre incentivou a
+                nunca desistir.
+              </p>
+            </div>
+          </article>
+
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/emprego.jpg" alt="Trabalhando" />
+            </div>
+            <div class="capitulo-texto">
+              <span class="ano">Pós ensino médio</span>
+              <h3>A rotina de trabalho</h3>
+              <p>
+                Por mais que eu já tenha trabalhado, pela primeira vez estava em
+                um emprego de período integral, nesse momento que conheci o
+                outro lado do Japão. Além de ser um trabalho de dois turnos
+                exigia bastante disposição física, gerando bastante desgaste e
+                cansaço. Então comecei a cair na rotina e perceber que por mais
+                que me gerasse uma certa estabilidade financeira, não agregava
+                no meu desenvolvimento intelectual, porque pelo trabalho ser em
+                fábrica é um serviço repetitivo, não necessitando pensar.
+              </p>
+            </div>
+          </article>
+
+          <article class="capitulo revelar">
+            <div class="capitulo-foto">
+              <img src="../assets/imgs/voltar.jpg" alt="Voltando" />
+            </div>
+            <div class="capitulo-texto">
+              <span class="ano">Em busca pelo conhecimento</span>
+              <h3>A ideia de voltar... Brasil</h3>
+              <p>
+                Minha primeira ideia foi começar a fazer faculdade EAD
+                Brasileira, porque as faculdades do Japão são extremamente
+                caras. Após quase 2 semestres percebi que estava mais aprendendo
+                por fora da faculdade do que pela metodologia da própria. Foi
+                então que surgiu a ideia de voltar para o Brasil apenas para
+                visitar e tentar fazer algum vestibular, caso desse certo ficar
+                no Brasil. Então após 7 anos direto morando fora, voltei para o
+                Brasil com um propósito.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="lados revelar">
+          <div class="lado">
+            <h3>Lado Positivo</h3>
+            <p>a cultura, organização, segurança e poder de compra.</p>
           </div>
-          <br><br>
-            <div class="lados revelar">
-              <div class="lado">
-                <h3>Lado Positivo</h3>
-                <p>a cultura, organização, segurança e poder de compra.</p>
-              </div>
-              <div class="lado">
-                <h3>Lado Negativo</h3>
-                <p>a cultura hierárquica e a pressão do trabalho.</p>
-              </div>
-            </div>
-          
-            <h3 class="subtitulo">Lugares do Japão</h3>
-            <div class="galeria" id="galeria-japao"></div>
-          </section>
-          
-          <section class="painel" id="europa">
-            <p class="kicker"><span class="selo">旅</span>第二章 · Europa</p>
-            <h2 class="titulo-secao">Mochilão pela Europa</h2>
-            <p>Duas semanas viajando sozinho antes de voltar ao Brasil.</p>
-            <div class="galeria" id="galeria-europa"></div>
-          </section>
+          <div class="lado">
+            <h3>Lado Negativo</h3>
+            <p>a cultura hierárquica e a pressão do trabalho.</p>
+          </div>
+        </div>
 
-       
+        <h3 class="subtitulo">Lugares do Japão</h3>
+        <div id="lugares-japao"></div>
+      </section>
+
+      <section class="painel" id="europa">
+        <p class="kicker"><span class="selo">旅</span>第二章 · Europa</p>
+        <h2 class="titulo-secao">Mochilão pela Europa</h2>
+        <p>Duas semanas viajando sozinho antes de voltar ao Brasil.</p>
+
+        <div id="lugares-europa"></div>
+      </section>
     </main>
 
     <script>
-       
-  const LUGARES_JAPAO = [
-    { pais: "Tóquio", jp: "東京", foto: "toquio.jpg", resumo: "Minha última vez em Shibuya" },
-    { pais: "Shinjuku", jp: "新宿", foto: "shinjuku.jpg", resumo: "Muito famoso pela estátua do Godzilla" },
-    { pais: "Osaka", jp: "大阪", foto: "osaka.jpg", resumo: "Região muito conhecida pelo seu Takoyaki (polvo)" },
-    { pais: "Nara", jp: "奈良", foto: "nara.jpg", resumo: "Cidade conhecida pelos Bambis espalhados" },
-    { pais: "Kyoto", jp: "京都", foto: "kyoto.jpg", resumo: "Um dos lugares do Japão que preserva muito pela sua cultura com seus templos" },
-    { pais: "Nagasaki", jp: "長崎", foto: "nagasaki.jpg", resumo: "Um dos lugares onde a bomba atômica caiu, fiz um passeio escolar nessa região" },
-    { pais: "Fuji", jp: "富士山", foto: "fuji.jpg", resumo: "A maior montanha do Japão" },
-    { pais: "Shizuoka", jp: "静岡", foto: "shizuoka.jpg", resumo: "Muitas paisagens relacionado a natureza, muito bonitas por sinal" },
-    { pais: "Yokohama", jp: "横浜", foto: "yokohama.jpg", resumo: "Um dos primeiros portos abertos a comércio internacional do Japão" },
-    { pais: "Nigata", jp: "新潟", foto: "nigata.jpg", resumo: "Região mais para o Norte onde costuma ser mais frio, por isso a neve" },
-    { pais: "Disney Japan", jp: "デｲズにー", foto: "disney.jpg", resumo: "O Japão é um dos 6 países onde possui uma Disney" },
-    { pais: "Universal Studios", jp: "ユニバーサル", foto: "universal.jpg", resumo: "Muito conhecida pela parte temática do Mario Bros e Harry Potter" }
-  ];
+      const LUGARES_JAPAO = [
+        {
+          nome: "Tokyo",
+          jp: "東京",
+          resumo:
+            "Um dos lugares mais conhecidos pelos turistas, mas é muito legal pela tecnologia que esse lugar tem a oferecer!",
+          fotos: [
+            "tokyo1.jpg",
+            "tokyo2.jpg",
+            "tokyo3.jpg",
+            "tokyo4.jpg",
+            "tokyo5.jpg",
+            "tokyo6.jpg",
+          ],
+        },
+        {
+          nome: "Kyoto",
+          jp: "京都",
+          resumo:
+            "Muito conhecida pelo seus templos e pela maneira que a cidade foi preservada.",
+          fotos: [
+            "kyoto1.jpg",
+            "kyoto2.jpg",
+            "kyoto3.jpg",
+            "kyoto4.jpg",
+            "kyoto5.jpg",
+            "kyoto6.jpg",
+            "kyoto7.jpg",
+            "kyoto8.jpg",
+            "kyoto9.jpg",
+          ],
+        },
+        {
+          nome: "Osaka",
+          jp: "大阪",
+          resumo: "Região muito conhecida pelo seu Takoyaki (polvo)",
+          fotos: [
+            "osaka1.jpg",
+            "osaka2.jpg",
+            "osaka3.jpg",
+            "osaka4.jpg",
+            "osaka5.jpg",
+          ],
+        },
+        {
+          nome: "Nara",
+          jp: "奈良",
+          resumo: "Famosa pelo fato de ter bambis soltos pela cidade",
+          fotos: [
+            "nara1.jpg",
+            "nara2.jpg",
+            "nara3.jpg",
+            "nara4.jpg",
+            "nara5.jpg",
+            "nara6.jpg",
+          ],
+        },
+        {
+          nome: "Nagasaki",
+          jp: "長崎",
+          resumo:
+            "Fui a um passeio escolar, apesar de ter uma história triste por trás, é muito interassante ver como eles se ergueram após essa tragédia!",
+          fotos: [
+            "nagasaki1.jpg",
+            "nagasaki2.jpg",
+            "nagasaki3.jpg",
+            "nagasaki4.jpg",
+            "nagasaki5.jpg",
+            "nagasaki6.jpg",
+            "nagasaki7.jpg",
+          ],
+        },
+        {
+          nome: "Nigata",
+          jp: "新潟",
+          resumo:
+            "Região mais ao norte do Japão onde é mais frio, por isso é muito boa para esquiar.",
+          fotos: ["nigata1.jpg", "nigata2.jpg", "nigata3.jpg", "nigata4.jpg"],
+        },
+        {
+          nome: "Fuji",
+          jp: "富士",
+          resumo:
+            "Fica no estado de Shizuoka, a maior montanha do Japão! E na verdade ele é um vulcão adormecido...",
+          fotos: ["fuji1.jpg", "fuji2.jpg", "fuji3.jpg", "fuji4.jpg"],
+        },
+        {
+          nome: "Shizuoka",
+          jp: "静岡",
+          resumo:
+            "Gosto muito de lá por ter morado e também por ter muitas praias e rios bonitos!",
+          fotos: [
+            "shizuoka1.jpg",
+            "shizuoka2.jpg",
+            "shizuoka3.jpg",
+            "shizuoka4.jpg",
+            "shizuoka5.jpg",
+          ],
+        },
+        {
+          nome: "Yokohama",
+          jp: "横浜",
+          resumo:
+            "Um dos primeiros portos a se abrir para o comércio internacional, como o Japão sempre foi um país fechado Yokohama é muito importante!",
+          fotos: [
+            "yokohama1.jpg",
+            "yokohama2.jpg",
+            "yokohama3.jpg",
+            "yokohama4.jpg",
+            "yokohama5.jpg",
+            "yokohama6.jpg",
+          ],
+        },
+        {
+          nome: "Disney Japan",
+          jp: "ディズニー",
+          resumo:
+            "O Japão é um dos 6 no mundo que possui não só uma mas 2 parques da Disney.",
+          fotos: [
+            "disney1.jpg",
+            "disney2.jpg",
+            "disney3.jpg",
+            "disney4.jpg",
+            "disney5.jpg",
+            "disney6.jpg",
+          ],
+        },
+        {
+          nome: "Universal Studios Japan",
+          jp: "ユニバーサル",
+          resumo:
+            "Gosto muito desse parque por ter parte temática do Mario Bros e Harry Potter, que são duas coisas que gosto bastante!",
+          fotos: [
+            "universal1.jpg",
+            "universal2.jpg",
+            "universal3.jpg",
+            "universal4.jpg",
+            "universal5.jpg",
+          ],
+        },
+      ];
 
-  const LUGARES_EUROPA = [
-    { pais: "Portugal", jp: "ポルトガル", foto: "portugal.jpg", resumo: "Azenhas do Mar muito famosa pela arquitetura das casas ao redor" },
-    { pais: "França", jp: "フランス", foto: "franca.jpg", resumo: "Lembrei muito do Filme Ratatouille" },
-    { pais: "Inglaterra", jp: "イギリス", foto: "inglaterra.jpg", resumo: "Achei um lugar muito bonito! Principalmente pela sua forte cultura através da música" },
-    { pais: "Itália", jp: "イタリア", foto: "italia.jpg", resumo: "Foi um dos lugares que mais gostei! Além de ter uma história muito interassante por conta do Império Romano, é um país muito bonito!" },
-    { pais: "Vaticano", jp: "バチカン", foto: "vaticano.jpg", resumo: "Visitei o menor país do mundo!" },
-    {pais: "Brasil", jp: "ブラジル", foto: "brasil.jpg", resumo: "Foi muito importante porque reencontrei a minha mãe depois de 7 anos" }
-  ];
+      const LUGARES_EUROPA = [
+        {
+          nome: "Portugal",
+          jp: "ポルトガル",
+          resumo:
+            "Azenhas do Mar muito famosa pela arquitetura das casas ao redor",
+          fotos: [
+            "portugal1.jpg",
+            "portugal2.jpg",
+            "portugal3.jpg",
+            "portugal4.jpg",
+            "portugal5.jpg",
+            "portugal6.jpg",
+            "portugal7.jpg",
+            "portugal8.jpg",
+            "portugal9.jpg",
+            "portugal10.jpg",
+            "portugal11.jpg",
+            "portugal12.jpg",
+          ],
+        },
+        {
+          nome: "França",
+          jp: "フランス",
+          resumo: "Lembrei muito do Filme Ratatouille",
+          fotos: [
+            "franca1.jpg",
+            "franca2.jpg",
+            "franca3.jpg",
+            "franca4.jpg",
+            "franca5.jpg",
+            "franca6.jpg",
+            "franca7.jpg",
+            "franca8.jpg",
+            "franca9.jpg",
+            "franca10.jpg",
+            "franca11.jpg",
+            "franca12.jpg",
+            "franca13.jpg",
+            "franca14.jpg",
+          ],
+        },
+        {
+          nome: "Inglaterra",
+          jp: "イギリス",
+          resumo:
+            "Achei um lugar muito bonito! Principalmente pela sua forte cultura através da música",
+          fotos: [
+            "inglaterra1.jpg",
+            "inglaterra2.jpg",
+            "inglaterra3.jpg",
+            "inglaterra4.jpg",
+            "inglaterra5.jpg",
+            "inglaterra6.jpg",
+            "inglaterra7.jpg",
+            "inglaterra8.jpg",
+            "inglaterra9.jpg",
+          ],
+        },
+        {
+          nome: "Itália",
+          jp: "イタリア",
+          resumo:
+            "Foi um dos lugares que mais gostei! Além de ter uma história muito interessante por conta do Império Romano, é um país muito bonito!",
+          fotos: [
+            "italia1.jpg",
+            "italia2.jpg",
+            "italia3.jpg",
+            "italia4.jpg",
+            "italia5.jpg",
+            "italia6.jpg",
+            "italia7.jpg",
+            "italia8.jpg",
+            "italia9.jpg",
+            "italia10.jpg",
+            "italia11.jpg",
+            "italia12.jpg",
+            "italia13.jpg",
+          ],
+        },
+        {
+          nome: "Vaticano",
+          jp: "バチカン",
+          resumo: "Visitei o menor país do mundo!",
+          fotos: [
+            "vaticano1.jpg",
+            "vaticano2.jpg",
+            "vaticano3.jpg",
+            "vaticano4.jpg",
+            "vaticano5.jpg",
+            "vaticano6.jpg",
+          ],
+        },
+        {
+          nome: "Brasil",
+          jp: "ブラジル",
+          resumo:
+            "Foi muito importante porque reencontrei a minha mãe depois de 7 anos",
+          fotos: [
+            "brasil1.jpg",
+            "brasil2.jpg",
+            "brasil3.jpg",
+            "brasil4.jpg",
+            "brasil5.jpg",
+          ],
+        },
+      ];
 
-  function exibirGaleria(idContainer, lista) {
-    let html = "";
-    lista.forEach((lugar, i) => {
-      html += `
-        <article class="card-lugar revelar">
-          <span class="numero">${i + 1}</span>
-          <div class="foto-wrap">
-            <img src="../assets/imgs/${lugar.foto}" alt="${lugar.pais}" loading="lazy"
-                 onerror="this.parentElement.classList.add('sem-foto')">
-          </div>
-          <div class="card-lugar-texto">
-            <h3>${lugar.pais}</h3>
-            <span class="jp">${lugar.jp}</span>
+      // Cria um bloco (título + resumo + carrossel) para cada lugar
+      function exibirLugares(idContainer, lista) {
+        let html = "";
+        lista.forEach((lugar) => {
+          const imagens = lugar.fotos
+            .map(
+              (arquivo) => `
+    <div class="slide" style="--foto: url('../assets/imgs/${arquivo}')">
+      <img src="../assets/imgs/${arquivo}" alt="${lugar.nome}" loading="lazy">
+    </div>`
+            )
+            .join("");
+
+          const botoes =
+            lugar.fotos.length > 1
+              ? `
+        <button class="carrossel-btn prev" aria-label="Foto anterior">&#10094;</button>
+        <button class="carrossel-btn next" aria-label="Próxima foto">&#10095;</button>`
+              : "";
+
+          html += `
+        <article class="lugar revelar">
+          <div class="lugar-cabecalho">
+            <h3>${lugar.nome} <span class="jp">${lugar.jp}</span></h3>
             <p>${lugar.resumo}</p>
           </div>
+          <div class="carrossel">
+            <div class="slides">${imagens}</div>
+            ${botoes}
+          </div>
         </article>`;
-    });
-    document.getElementById(idContainer).innerHTML = html;
-  }
+        });
+        document.getElementById(idContainer).innerHTML = html;
+      }
 
-  // Faz os blocos aparecerem suavemente conforme a pessoa rola a página
-  function ativarRevelar() {
-    const observador = new IntersectionObserver((itens) => {
-      itens.forEach((item) => {
-        if (item.isIntersecting) {
-          item.target.classList.add("visivel");
-          observador.unobserve(item.target);
-        }
-      });
-    }, { threshold: 0.15 });
+      // Liga a navegação e a passagem automática em TODOS os carrosséis
+      function iniciarCarrosseis() {
+        document.querySelectorAll(".carrossel").forEach((carrossel) => {
+          const slides = carrossel.querySelector(".slides");
+          const total = slides.children.length;
+          const prev = carrossel.querySelector(".prev");
+          const next = carrossel.querySelector(".next");
+          let index = 0;
+          let timer = null;
 
-    document.querySelectorAll(".revelar").forEach((el) => observador.observe(el));
-  }
+          function mostrar(n) {
+            index = (n + total) % total;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+          }
 
-  function iniciarPagina() {
-    exibirGaleria("galeria-japao", LUGARES_JAPAO);
-    exibirGaleria("galeria-europa", LUGARES_EUROPA);
-    ativarRevelar();
-  }
-</script>
-<!-- timeline no qual quanto mais scroll mais avanco no tempo
- japao: chegada escola, aprendendo o jp -->
-</body>
+          function iniciarAuto() {
+            timer = setInterval(() => mostrar(index + 1), 4000);
+          }
 
+          function pararAuto() {
+            clearInterval(timer);
+          }
+
+          if (prev) prev.addEventListener("click", () => mostrar(index - 1));
+          if (next) next.addEventListener("click", () => mostrar(index + 1));
+
+          if (total > 1) {
+            iniciarAuto();
+            carrossel.addEventListener("mouseenter", pararAuto);
+            carrossel.addEventListener("mouseleave", iniciarAuto);
+          }
+        });
+      }
+
+      // Faz os blocos aparecerem suavemente conforme a pessoa rola a página
+      // (IGUAL ao que você já tinha, não mexa)
+      function ativarRevelar() {
+        const observador = new IntersectionObserver(
+          (itens) => {
+            itens.forEach((item) => {
+              if (item.isIntersecting) {
+                item.target.classList.add("visivel");
+                observador.unobserve(item.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+
+        document
+          .querySelectorAll(".revelar")
+          .forEach((el) => observador.observe(el));
+      }
+
+      function iniciarPagina() {
+        exibirLugares("lugares-japao", LUGARES_JAPAO);
+        exibirLugares("lugares-europa", LUGARES_EUROPA);
+        iniciarCarrosseis();
+        ativarRevelar(); // por último, para encontrar os .revelar já criados
+      }
+    </script>
+  </body>
 </html>

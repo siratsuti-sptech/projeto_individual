@@ -136,12 +136,12 @@
     temMaiusculo = true
   }else if(letra != letra.toUpperCase()){
     temMinusculo = true
-  }else if(letra != ""){
+  }else if(letra != " "){
     temEspecial = true
   }
  }
 
-  if(!temMaiusculo || !temMinusculo || temEspecial){
+  if(!temMaiusculo || !temMinusculo || !temEspecial){
     mostrarMensagem("A senha precisa ter uma letra maiúscula, uma minúscula e um caractere especial (como @ ! # $).");
     return false;
   }
